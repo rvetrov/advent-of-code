@@ -74,22 +74,33 @@ func (g *Game) MinCubeSet() *CubeSet {
 	return max
 }
 
-const testCase = "big"
-
-func main() {
-	input := utils.MustReadInput("input." + testCase)
+func solveV1(input string) int {
 	res := 0
 	lines := strings.Split(input, "\n")
-	fmt.Println("Length", len(lines))
 
-	// target := &CubeSet{Reds: 12, Greens: 13, Blues: 14}
+	target := &CubeSet{Reds: 12, Greens: 13, Blues: 14}
 	for _, line := range lines {
 		game := NewGame(line)
-		fmt.Println(game)
-		res += game.MinCubeSet().Power()
-		// if game.MinCubeSet().LTE(target) {
-		// 	res += game.ID
-		// }
+		if game.MinCubeSet().LTE(target) {
+			res += game.ID
+		}
 	}
-	utils.MustWriteOutput("output-v2."+testCase, fmt.Sprint(res))
+	return res
+}
+
+func solveV2(input string) int {
+	res := 0
+	lines := strings.Split(input, "\n")
+
+	for _, line := range lines {
+		game := NewGame(line)
+		res += game.MinCubeSet().Power()
+	}
+	return res
+}
+
+func main() {
+	input := utils.MustReadInput("input.big")
+	res := solveV2(input)
+	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

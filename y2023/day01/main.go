@@ -28,7 +28,9 @@ func getDigitV2(line string) (int, bool) {
 	return 0, false
 }
 
-func getCode(line string, getDigitFunc func(string) (int, bool)) int {
+type getDigitFuncDecl func(string) (int, bool)
+
+func getCode(line string, getDigitFunc getDigitFuncDecl) int {
 	found := false
 	first := 0
 	last := 0
@@ -44,13 +46,17 @@ func getCode(line string, getDigitFunc func(string) (int, bool)) int {
 	return first*10 + last
 }
 
-func main() {
-	input := utils.MustReadInput("input.big.txt")
+func solve(input string, getDigitFunc getDigitFuncDecl) int {
 	res := 0
 	lines := strings.Split(input, "\n")
-	fmt.Println("Length", len(lines))
 	for _, line := range lines {
-		res += getCode(line, getDigitV2)
+		res += getCode(line, getDigitFunc)
 	}
+	return res
+}
+
+func main() {
+	input := utils.MustReadInput("input.big.txt")
+	res := solve(input, getDigitV2)
 	utils.MustWriteOutput("output-v2.txt", fmt.Sprint(res))
 }
