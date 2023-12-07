@@ -9,19 +9,49 @@ import (
 	"adventofcode.com/2023/internal/utils"
 )
 
-type MappingRange struct {
-	SrcStart int
-	DstStart int
-	Length   int
+type Range struct {
+	Start int
+	Len   int
 }
 
-func (mp *MappingRange) Contains(seed int) bool {
-	return mp.SrcStart <= seed && seed < mp.SrcStart+mp.Length
+func (r Range) Contains(x int) bool {
+	return r.Start <= x && x < r.Start+r.Len
+}
+
+func (r Range) End() int {
+	return r.Start + r.Len
+}
+
+func (r Range) Intersection(other Range) *Range {
+	left := max(r.Start, other.Start)
+	right := min(r.End(), other.End())
+	if left < right {
+		return &Range{
+			Start: left,
+			Len:   right - left,
+		}
+	}
+	return nil
+}
+
+type Ranges []Range
+
+func (rs Ranges) Len() int           { return len(rs) }
+func (rs Ranges) Swap(i, j int)      { rs[i], rs[j] = rs[j], rs[i] }
+func (rs Ranges) Less(i, j int) bool { return rs[i].Start < rs[j].Start }
+
+type MappingRange struct {
+	Src Range
+	Dst Range
+}
+
+func (mp *MappingRange) Contains(x int) bool {
+	return mp.Src.Contains(x)
 }
 
 func (mp *MappingRange) Map(seed int) int {
-	diff := seed - mp.SrcStart
-	return mp.DstStart + diff
+	diff := seed - mp.Src.Start
+	return mp.Dst.Start + diff
 }
 
 type MappingRanges []*MappingRange
@@ -35,7 +65,7 @@ func (mp MappingRanges) Swap(i, j int) {
 }
 
 func (mp MappingRanges) Less(i, j int) bool {
-	return mp[i].SrcStart < mp[j].SrcStart
+	return mp[i].Src.Start < mp[j].Src.Start
 }
 
 func parseState(input string) ([]int, []MappingRanges) {
@@ -57,8 +87,12 @@ func parseState(input string) ([]int, []MappingRanges) {
 				lastInd++
 			}
 		} else {
-			m := &MappingRange{}
-			if scanned, err := fmt.Sscanf(line, "%d %d %d", &m.DstStart, &m.SrcStart, &m.Length); scanned == 3 && err == nil {
+			srcStart, dstStart, length := 0, 0, 0
+			if scanned, err := fmt.Sscanf(line, "%d %d %d", &dstStart, &srcStart, &length); scanned == 3 && err == nil {
+				m := &MappingRange{
+					Src: Range{Start: srcStart, Len: length},
+					Dst: Range{Start: dstStart, Len: length},
+				}
 				mappings[lastInd] = append(mappings[lastInd], m)
 			}
 		}
@@ -94,47 +128,40 @@ func solveV1(input string) int {
 	return res
 }
 
-func doMapSeeds(seeds MappingRanges, mapping MappingRanges) MappingRanges {
+func doMapSeeds(seeds Ranges, mapping MappingRanges) Ranges {
 	sort.Sort(seeds)
 	sort.Sort(mapping)
 
-	newSeeds := MappingRanges{}
+	newSeeds := Ranges{}
 	j := 0
 	for i := 0; i < len(seeds); i++ {
-		for j < len(mapping) && mapping[j].SrcStart < seeds[i].SrcStart+seeds[i].Length && seeds[i].Length > 0 {
+		for j < len(mapping) && seeds[i].Len > 0 && mapping[j].Src.Start < seeds[i].Start+seeds[i].Len {
+			isec := seeds[i].Intersection(mapping[j].Src)
 			// seed:   [___)
 			// map : [[[[[[
-			if mapping[j].SrcStart+mapping[j].Length <= seeds[i].SrcStart {
+			if isec == nil {
 				// seed:     [___)
 				// map : [___)
 				j++
-			} else if seeds[i].SrcStart < mapping[j].SrcStart {
+			} else if seeds[i].Start < isec.Start {
 				// seed: [___)
 				// map :   [____
-				newSeed := &MappingRange{
-					SrcStart: seeds[i].SrcStart,
-					Length:   mapping[j].SrcStart - seeds[i].SrcStart,
+				newSeed := Range{
+					Start: seeds[i].Start,
+					Len:   isec.Start - seeds[i].Start,
 				}
 				newSeeds = append(newSeeds, newSeed)
-				seeds[i].Length -= newSeed.Length
-				seeds[i].SrcStart = mapping[j].SrcStart
+				seeds[i].Len -= newSeed.Len
+				seeds[i].Start = isec.Start
 			} else {
 				// seed:   [___)
 				// map : [___
-				newStart := seeds[i].SrcStart
-				newFin := newStart + seeds[i].Length
-				if newFin > mapping[j].SrcStart+mapping[j].Length {
-					newFin = mapping[j].SrcStart + mapping[j].Length
-				}
-				seeds[i].SrcStart = newFin
-				seeds[i].Length -= newFin - newStart
-				newSeeds = append(newSeeds, &MappingRange{
-					SrcStart: mapping[j].Map(newStart),
-					Length:   newFin - newStart,
-				})
+				seeds[i].Start = isec.End()
+				seeds[i].Len -= isec.Len
+				newSeeds = append(newSeeds, Range{Start: mapping[j].Map(isec.Start), Len: isec.Len})
 			}
 		}
-		if seeds[i].Length > 0 {
+		if seeds[i].Len > 0 {
 			newSeeds = append(newSeeds, seeds[i])
 		}
 	}
@@ -144,18 +171,17 @@ func doMapSeeds(seeds MappingRanges, mapping MappingRanges) MappingRanges {
 
 func solveV2(input string) int {
 	seedNums, mappings := parseState(input)
-	seeds := MappingRanges{}
+	seeds := Ranges{}
 	for i := 0; i < len(seedNums); i += 2 {
-		seeds = append(seeds, &MappingRange{SrcStart: seedNums[i], Length: seedNums[i+1]})
+		seeds = append(seeds, Range{Start: seedNums[i], Len: seedNums[i+1]})
 	}
 	fmt.Println(seeds)
-	fmt.Println(mappings)
 
 	for _, mapRanges := range mappings {
 		seeds = doMapSeeds(seeds, mapRanges)
 	}
 	sort.Sort(seeds)
-	return seeds[0].SrcStart
+	return seeds[0].Start
 }
 
 func main() {
