@@ -78,7 +78,7 @@ func (h *Hand) Type() int {
 }
 
 func charToStrength(ch rune, withJockers bool) int {
-	// A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, 2, J
+	// A, K, Q, [J], T, 9, 8, 7, 6, 5, 4, 3, 2, [J]
 	switch {
 	case '2' <= ch && ch <= '9':
 		return int(ch - '0')
@@ -104,7 +104,7 @@ func charToStrength(ch rune, withJockers bool) int {
 func NewHand(str string, withJockers bool) *Hand {
 	hand := Hand{}
 	if n, err := fmt.Sscanf(str, "%s %d", &hand.raw, &hand.Bid); err != nil || n != 2 {
-		log.Fatalf("Failed to prase hand %q. N: %q, Error: %q", str, n, err)
+		log.Fatalf("Failed to parse hand %q. N: %q, Error: %q", str, n, err)
 	}
 	for _, ch := range hand.raw {
 		strength := charToStrength(ch, withJockers)
