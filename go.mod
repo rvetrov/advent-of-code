@@ -1,4 +1,4 @@
-module adventofcode.com/2023
+module adventofcode.com
 
 go 1.21.1
 

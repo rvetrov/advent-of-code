@@ -6,7 +6,7 @@ import (
 	"sort"
 	"strings"
 
-	"adventofcode.com/2023/internal/utils"
+	"adventofcode.com/internal/utils"
 )
 
 type Hands []*Hand

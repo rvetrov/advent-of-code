@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"adventofcode.com/2023/internal/math"
-	"adventofcode.com/2023/internal/utils"
+	"adventofcode.com/internal/math"
+	"adventofcode.com/internal/utils"
 )
 
 type Crossroad struct {

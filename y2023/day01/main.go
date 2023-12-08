@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"adventofcode.com/2023/internal/utils"
+	"adventofcode.com/internal/utils"
 )
 
 var digits = []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}

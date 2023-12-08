@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"adventofcode.com/2023/internal/utils"
+	"adventofcode.com/internal/utils"
 )
 
 func parseState(input string) ([]int, []int) {

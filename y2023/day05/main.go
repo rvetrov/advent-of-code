@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"adventofcode.com/2023/internal/utils"
+	"adventofcode.com/internal/utils"
 )
 
 type Range struct {
