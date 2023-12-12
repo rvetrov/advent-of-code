@@ -35,8 +35,6 @@ func canBePlaced(length, pos int, field string) bool {
 }
 
 func numberOfPossibleArrangements(field string, groups []int) int {
-	fmt.Println(field, groups)
-
 	n := len(field)
 	resPrev := make([]int, n+1)
 	resPrev[0] = 1
@@ -47,7 +45,6 @@ func numberOfPossibleArrangements(field string, groups []int) int {
 			break
 		}
 	}
-	fmt.Println(resPrev)
 
 	for _, group := range groups {
 		res := make([]int, n+1)
@@ -64,7 +61,6 @@ func numberOfPossibleArrangements(field string, groups []int) int {
 				res[j] += resPrev[i]
 			}
 		}
-		fmt.Println(res)
 
 		resPrev = res
 	}
