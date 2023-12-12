@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
 	"adventofcode.com/internal/math"
 	"adventofcode.com/internal/utils"
@@ -57,13 +56,7 @@ func (m Map) FindLoop(position string) (int, Route) {
 }
 
 func newMap(input string) Map {
-	lines := []string{}
-	for _, line := range strings.Split(input, "\n") {
-		line = strings.TrimSpace(line)
-		if len(line) > 0 {
-			lines = append(lines, line)
-		}
-	}
+	lines := utils.Lines(input)
 
 	edges := map[string]Crossroad{}
 	for i := 1; i < len(lines); i++ {

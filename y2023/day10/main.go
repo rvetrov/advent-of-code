@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
 	"adventofcode.com/internal/utils"
 )
@@ -154,14 +153,12 @@ func (f Field) EnclosedByLoop(start Point) int {
 
 func parseField(input string) Field {
 	f := Field{grid: []string{}}
-	for _, line := range strings.Split(input, "\n") {
-		line = strings.TrimSpace(line)
-		if len(line) > 0 {
-			f.grid = append(f.grid, line)
-			for j := 0; j < len(line); j++ {
-				if line[j] == 'S' {
-					f.Start = Point{len(f.grid) - 1, j}
-				}
+	lines := utils.Lines()
+	for _, line := range lines {
+		f.grid = append(f.grid, line)
+		for j := 0; j < len(line); j++ {
+			if line[j] == 'S' {
+				f.Start = Point{len(f.grid) - 1, j}
 			}
 		}
 	}
