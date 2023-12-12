@@ -153,7 +153,7 @@ func (f Field) EnclosedByLoop(start Point) int {
 
 func parseField(input string) Field {
 	f := Field{grid: []string{}}
-	lines := utils.Lines()
+	lines := utils.Lines(input)
 	for _, line := range lines {
 		f.grid = append(f.grid, line)
 		for j := 0; j < len(line); j++ {
