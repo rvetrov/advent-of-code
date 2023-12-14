@@ -1,19 +1,56 @@
 package utils
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
+
+func Print(fields []string) {
+	for _, line := range fields {
+		fmt.Println(line)
+	}
+}
+
+func buildersToLines(builders []strings.Builder) []string {
+	res := make([]string, len(builders))
+	for i, builder := range builders {
+		res[i] = builder.String()
+	}
+	return res
+}
 
 func Transpose(field []string) []string {
-	builders := make([]strings.Builder, len(field[0]))
+	n, m := len(field), len(field[0])
+	builders := make([]strings.Builder, m)
 
-	for i := 0; i < len(field); i++ {
+	for i := 0; i < n; i++ {
 		for j, ch := range field[i] {
 			builders[j].WriteRune(ch)
 		}
 	}
+	return buildersToLines(builders)
+}
 
-	res := []string{}
-	for _, builder := range builders {
-		res = append(res, builder.String())
+func RotateCW(field []string) []string {
+	n, m := len(field), len(field[0])
+	builders := make([]strings.Builder, m)
+	for j := 0; j < m; j++ {
+		builder := &builders[j]
+		for i := n - 1; i >= 0; i-- {
+			builder.WriteByte(field[i][j])
+		}
 	}
-	return res
+	return buildersToLines(builders)
+}
+
+func RotateCCW(field []string) []string {
+	n, m := len(field), len(field[0])
+	builders := make([]strings.Builder, m)
+	for j := 0; j < m; j++ {
+		builder := &builders[m-1-j]
+		for i := 0; i < n; i++ {
+			builder.WriteByte(field[i][j])
+		}
+	}
+	return buildersToLines(builders)
 }
