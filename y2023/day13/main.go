@@ -27,7 +27,7 @@ func findHorizontalReflectionLines(field []string) []int {
 
 func findReflectionLines(field []string) ([]int, []int) {
 	rowRefl := findHorizontalReflectionLines(field)
-	rotated := utils.Rotate(field)
+	rotated := utils.Transpose(field)
 	colRefl := findHorizontalReflectionLines(rotated)
 	return rowRefl, colRefl
 }

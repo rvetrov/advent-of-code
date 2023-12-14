@@ -2,7 +2,7 @@ package utils
 
 import "strings"
 
-func Rotate(field []string) []string {
+func Transpose(field []string) []string {
 	builders := make([]strings.Builder, len(field[0]))
 
 	for i := 0; i < len(field); i++ {
