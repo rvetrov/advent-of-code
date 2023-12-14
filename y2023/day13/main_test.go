@@ -60,14 +60,12 @@ func TestV1(t *testing.T) {
 }
 
 func TestV2(t *testing.T) {
-	res := 0
-
-	res = solveV2(testCase3)
-	require.Equal(t, 900, res) // ???
-
-	res = solveV2(testCase1)
+	res := solveV2(testCase1)
 	require.Equal(t, 400, res)
 
 	res = solveV2(testCase2)
-	require.Equal(t, 2, res) // ???
+	require.Equal(t, 2, res)
+
+	res = solveV2(testCase3)
+	require.Equal(t, 900, res)
 }
