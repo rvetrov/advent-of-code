@@ -4,26 +4,9 @@ import (
 	"fmt"
 	"log"
 	"slices"
-	"strings"
 
 	"adventofcode.com/internal/utils"
 )
-
-func rotate(field []string) []string {
-	builders := make([]strings.Builder, len(field[0]))
-
-	for i := 0; i < len(field); i++ {
-		for j, ch := range field[i] {
-			builders[j].WriteRune(ch)
-		}
-	}
-
-	res := []string{}
-	for _, builder := range builders {
-		res = append(res, builder.String())
-	}
-	return res
-}
 
 func findHorizontalReflectionLines(field []string) []int {
 	res := []int{}
@@ -44,7 +27,7 @@ func findHorizontalReflectionLines(field []string) []int {
 
 func findReflectionLines(field []string) ([]int, []int) {
 	rowRefl := findHorizontalReflectionLines(field)
-	rotated := rotate(field)
+	rotated := utils.Rotate(field)
 	colRefl := findHorizontalReflectionLines(rotated)
 	return rowRefl, colRefl
 }
