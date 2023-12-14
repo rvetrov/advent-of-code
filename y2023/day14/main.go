@@ -39,7 +39,6 @@ func weighLine(line string) (res int) {
 
 func solveV1(input string) int {
 	field := utils.RotateCCW(utils.Lines(input))
-	fmt.Println(field)
 	res := 0
 	for _, line := range field {
 		res += weighLine(tiltLeft(line))
@@ -63,7 +62,7 @@ func solveV2(input string) int {
 
 	totalRotations := 1000000000
 	for step := 0; step < totalRotations; step++ {
-		fingerprint := fmt.Sprintf("%d-%s", step%4, strings.Join(field, ""))
+		fingerprint := strings.Join(field, "")
 		if prevStep, ok := cache[fingerprint]; ok {
 			cycleLen := step - prevStep
 			step += cycleLen * ((totalRotations - step) / cycleLen)
