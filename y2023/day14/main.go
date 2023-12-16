@@ -36,7 +36,7 @@ func weighLine(line string) (res int) {
 	return res
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	field := utils.RotateCCW(utils.NonEmptyLines(input))
 	res := 0
 	for _, line := range field {
@@ -55,7 +55,7 @@ func cycleTilts(field []string) []string {
 	return field
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	field := utils.RotateCCW(utils.NonEmptyLines(input))
 	cache := map[string]int{}
 

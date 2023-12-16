@@ -40,14 +40,14 @@ XXX = (XXX, XXX)
 `
 
 func TestV1(t *testing.T) {
-	res := solveV1(testCase1)
+	res := SolveV1(testCase1)
 	require.Equal(t, 2, res)
 
-	res = solveV1(testCase2)
+	res = SolveV1(testCase2)
 	require.Equal(t, 6, res)
 }
 
 func TestV2(t *testing.T) {
-	res := solveV2(testCaseV2)
+	res := SolveV2(testCaseV2)
 	require.Equal(t, 6, res)
 }

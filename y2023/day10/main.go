@@ -170,13 +170,13 @@ func parseField(input string) Field {
 	return f
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	f := parseField(input)
 	loopLength := f.FindLoop(f.Start)
 	return loopLength / 2
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	f := parseField(input)
 	enclosed := f.EnclosedByLoop(f.Start)
 	return enclosed

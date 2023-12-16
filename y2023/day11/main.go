@@ -77,10 +77,10 @@ func solve(input string, expansion int) int {
 	return res
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	return solve(input, 2)
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	return solve(input, 1000000)
 }

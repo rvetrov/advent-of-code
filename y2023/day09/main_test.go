@@ -13,11 +13,11 @@ const testCase1 = `
 `
 
 func TestV1(t *testing.T) {
-	res := solveV1(testCase1)
+	res := SolveV1(testCase1)
 	require.Equal(t, 114, res)
 }
 
 func TestV2(t *testing.T) {
-	res := solveV2(testCase1)
+	res := SolveV2(testCase1)
 	require.Equal(t, 2, res)
 }

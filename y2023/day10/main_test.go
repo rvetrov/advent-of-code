@@ -73,23 +73,23 @@ L7JLJL-JLJLJL--JLJ.L
 `
 
 func TestV1(t *testing.T) {
-	res := solveV1(testCaseV1_1)
+	res := SolveV1(testCaseV1_1)
 	require.Equal(t, 4, res)
 
-	res = solveV1(testCaseV1_2)
+	res = SolveV1(testCaseV1_2)
 	require.Equal(t, 8, res)
 }
 
 func TestV2(t *testing.T) {
-	res := solveV2(testCaseV2_1)
+	res := SolveV2(testCaseV2_1)
 	require.Equal(t, 4, res)
 
-	res = solveV2(testCaseV2_2)
+	res = SolveV2(testCaseV2_2)
 	require.Equal(t, 4, res)
 
-	res = solveV2(testCaseV2_3)
+	res = SolveV2(testCaseV2_3)
 	require.Equal(t, 8, res)
 
-	res = solveV2(testCaseV2_4)
+	res = SolveV2(testCaseV2_4)
 	require.Equal(t, 10, res)
 }

@@ -57,7 +57,7 @@ func parseHistories(input string) []History {
 	return res
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	hs := parseHistories(input)
 	res := 0
 	for _, history := range hs {
@@ -66,7 +66,7 @@ func solveV1(input string) int {
 	return res
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	hs := parseHistories(input)
 	res := 0
 	for _, history := range hs {

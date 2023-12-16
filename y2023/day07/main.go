@@ -132,10 +132,10 @@ func solve(input string, withJockers bool) int {
 	return res
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	return solve(input, false)
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	return solve(input, true)
 }

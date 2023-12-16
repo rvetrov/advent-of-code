@@ -70,7 +70,7 @@ func newMap(input string) Map {
 	return Map{Route: lines[0], Edges: edges}
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	mp := newMap(input)
 	res := 0
 	for pos, cur := 0, "AAA"; cur != "ZZZ"; pos = (pos + 1) % len(mp.Route) {
@@ -84,7 +84,7 @@ func solveV1(input string) int {
 	return res
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	mp := newMap(input)
 	ghosts := []string{}
 	for from := range mp.Edges {

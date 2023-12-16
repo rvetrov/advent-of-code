@@ -67,7 +67,7 @@ func numberOfPossibleArrangements(field string, groups []int) int {
 	return resPrev[n]
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	lines := utils.NonEmptyLines(input)
 	res := 0
 	for _, line := range lines {
@@ -77,7 +77,7 @@ func solveV1(input string) int {
 	return res
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	lines := utils.NonEmptyLines(input)
 	res := 0
 	for _, line := range lines {

@@ -89,14 +89,14 @@ func (t *Tracer) Clear() {
 	t.traced = make(map[string]bool)
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	field := utils.NonEmptyLines(input)
 	t := NewTracer(field)
 	t.Beam(0, 0, vecRight)
 	return t.Energized()
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	field := utils.NonEmptyLines(input)
 	res := 0
 	t := NewTracer(field)

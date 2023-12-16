@@ -20,7 +20,7 @@ const testCase1 = `
 `
 
 func TestV1(t *testing.T) {
-	res := solveV1(testCase1)
+	res := SolveV1(testCase1)
 	require.Equal(t, 374, res)
 }
 

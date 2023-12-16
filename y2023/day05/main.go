@@ -99,7 +99,7 @@ func parseState(input string) ([]int, []MappingRanges) {
 
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	seeds, mappings := parseState(input)
 	fmt.Println(seeds)
 	fmt.Println(mappings)
@@ -167,7 +167,7 @@ func doMapSeeds(seeds Ranges, mapping MappingRanges) Ranges {
 	return newSeeds
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	seedNums, mappings := parseState(input)
 	seeds := Ranges{}
 	for i := 0; i < len(seedNums); i += 2 {

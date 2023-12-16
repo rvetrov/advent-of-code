@@ -25,17 +25,17 @@ const testCase2 = `
 `
 
 func TestV1(t *testing.T) {
-	res := solveV1(testCase1)
+	res := SolveV1(testCase1)
 	require.Equal(t, 6, res)
 
-	res = solveV1(testCase2)
+	res = SolveV1(testCase2)
 	require.Equal(t, 21, res)
 }
 
 func TestV2(t *testing.T) {
-	res := solveV2(testCase1)
+	res := SolveV2(testCase1)
 	require.Equal(t, 6, res)
 
-	res = solveV2(testCase2)
+	res = SolveV2(testCase2)
 	require.Equal(t, 525152, res)
 }

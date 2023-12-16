@@ -96,7 +96,7 @@ func parseOperations(input string) []Operation {
 	return ops
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	res := 0
 	for _, op := range parseOperations(input) {
 		res += stringHash(op.Raw)
@@ -104,7 +104,7 @@ func solveV1(input string) int {
 	return res
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	boxes := make([]Box, 256)
 	for _, op := range parseOperations(input) {
 		boxI := stringHash(op.Lens.Label)

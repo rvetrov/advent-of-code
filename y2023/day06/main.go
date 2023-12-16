@@ -34,7 +34,7 @@ func waysToWin(time, dist int) int {
 	return res
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	times, distances := parseState(input, false)
 
 	res := 1
@@ -44,7 +44,7 @@ func solveV1(input string) int {
 	return res
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	times, distances := parseState(input, true)
 
 	res := 1
