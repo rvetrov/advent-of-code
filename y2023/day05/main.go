@@ -96,13 +96,10 @@ func parseState(input string) ([]int, []MappingRanges) {
 		}
 	}
 	return seeds, mappings
-
 }
 
 func SolveV1(input string) int {
 	seeds, mappings := parseState(input)
-	fmt.Println(seeds)
-	fmt.Println(mappings)
 
 	for _, mapRanges := range mappings {
 		newSeeds := make([]int, len(seeds))
@@ -173,7 +170,6 @@ func SolveV2(input string) int {
 	for i := 0; i < len(seedNums); i += 2 {
 		seeds = append(seeds, Range{Start: seedNums[i], Len: seedNums[i+1]})
 	}
-	fmt.Println(seeds)
 
 	for _, mapRanges := range mappings {
 		seeds = doMapSeeds(seeds, mapRanges)

@@ -92,12 +92,10 @@ func SolveV2(input string) int {
 			ghosts = append(ghosts, from)
 		}
 	}
-	fmt.Println("Ghosts:", len(ghosts))
 
 	res := 1
 	for _, ghost := range ghosts {
-		loopSize, route := mp.FindLoop(ghost)
-		fmt.Println(ghost, loopSize, route)
+		loopSize, _ := mp.FindLoop(ghost)
 		// Prints the following for input.big:
 		// XCA 19099 [{XCA,0 0} {NNZ,0 19099} {NNZ,0 38198}]
 		// AAA 19637 [{AAA,0 0} {ZZZ,0 19637} {ZZZ,0 39274}]

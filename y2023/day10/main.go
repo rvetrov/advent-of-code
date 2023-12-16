@@ -1,8 +1,6 @@
 package day10
 
 import (
-	"fmt"
-
 	"adventofcode.com/internal/utils"
 )
 
@@ -110,9 +108,6 @@ func (f Field) EnclosedByLoop(start Point) int {
 	for i, line := range f.grid {
 		insideTheLoop := false
 
-		fmt.Println(line)
-		fmt.Println(f.isOnLoop[i])
-
 		for j := 0; j < len(line); j++ {
 			if f.isOnLoop[i][j] {
 				inVec := Vector{}
@@ -125,7 +120,6 @@ func (f Field) EnclosedByLoop(start Point) int {
 				}
 
 				outVec := inVec.Reversed()
-				fmt.Println(j, inVec, outVec)
 				if f.connected(cur, cur.Add(outVec)) {
 					insideTheLoop = !insideTheLoop
 				} else {
