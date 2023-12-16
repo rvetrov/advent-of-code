@@ -1,7 +1,6 @@
-package main
+package day14
 
 import (
-	"fmt"
 	"strings"
 
 	"adventofcode.com/internal/utils"
@@ -77,10 +76,4 @@ func solveV2(input string) int {
 		res += weighLine(line)
 	}
 	return res
-}
-
-func main() {
-	input := utils.MustReadInput("input.big")
-	res := solveV2(input)
-	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

@@ -1,4 +1,4 @@
-package main
+package day08
 
 import (
 	"fmt"
@@ -110,10 +110,4 @@ func solveV2(input string) int {
 		res = math.LCM(res, loopSize)
 	}
 	return res
-}
-
-func main() {
-	input := utils.MustReadInput("input.big")
-	res := solveV2(input)
-	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

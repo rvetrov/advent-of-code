@@ -1,12 +1,10 @@
-package main
+package day07
 
 import (
 	"fmt"
 	"log"
 	"sort"
 	"strings"
-
-	"adventofcode.com/internal/utils"
 )
 
 type Hands []*Hand
@@ -140,10 +138,4 @@ func solveV1(input string) int {
 
 func solveV2(input string) int {
 	return solve(input, true)
-}
-
-func main() {
-	input := utils.MustReadInput("input.big")
-	res := solveV2(input)
-	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

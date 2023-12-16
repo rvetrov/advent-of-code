@@ -1,7 +1,6 @@
-package main
+package day12
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -93,10 +92,4 @@ func solveV2(input string) int {
 		res += numberOfPossibleArrangements(field, gs)
 	}
 	return res
-}
-
-func main() {
-	input := utils.MustReadInput("input.big")
-	res := solveV2(input)
-	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

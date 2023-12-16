@@ -1,4 +1,4 @@
-package main
+package day01
 
 import (
 	"testing"
@@ -12,7 +12,7 @@ pqr3stu8vwx
 a1b2c3d4e5f
 treb7uchet`
 
-	res := solve(s, getDigitV1)
+	res := SolveV1(s)
 
 	require.Equal(t, 142, res)
 }
@@ -26,7 +26,7 @@ xtwone3four
 zoneight234
 7pqrstsixteen`
 
-	res := solve(s, getDigitV2)
+	res := SolveV2(s)
 
 	require.Equal(t, 281, res)
 }

@@ -1,4 +1,4 @@
-package main
+package day04
 
 import (
 	"testing"
@@ -16,13 +16,13 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
 `
 
 func TestV1(t *testing.T) {
-	res := solveV1(testCase1)
+	res := SolveV1(testCase1)
 
 	require.Equal(t, 13, res)
 }
 
 func TestV2(t *testing.T) {
-	res := solveV2(testCase1)
+	res := SolveV2(testCase1)
 
 	require.Equal(t, 30, res)
 }

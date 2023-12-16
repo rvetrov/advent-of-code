@@ -1,4 +1,4 @@
-package main
+package day06
 
 import (
 	"testing"
@@ -11,17 +11,12 @@ Time:      7  15   30
 Distance:  9  40  200
 `
 
-const testCase2 = `
-Time:      71530
-Distance:  940200
-`
-
 func TestV1(t *testing.T) {
 	res := solveV1(testCase1)
 	require.Equal(t, 288, res)
 }
 
 func TestV2(t *testing.T) {
-	res := solveV2(testCase2)
+	res := solveV2(testCase1)
 	require.Equal(t, 71503, res)
 }

@@ -1,7 +1,6 @@
-package main
+package day11
 
 import (
-	"fmt"
 	"strings"
 
 	"adventofcode.com/internal/math"
@@ -84,10 +83,4 @@ func solveV1(input string) int {
 
 func solveV2(input string) int {
 	return solve(input, 1000000)
-}
-
-func main() {
-	input := utils.MustReadInput("input.big")
-	res := solveV2(input)
-	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

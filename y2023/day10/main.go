@@ -1,4 +1,4 @@
-package main
+package day10
 
 import (
 	"fmt"
@@ -180,10 +180,4 @@ func solveV2(input string) int {
 	f := parseField(input)
 	enclosed := f.EnclosedByLoop(f.Start)
 	return enclosed
-}
-
-func main() {
-	input := utils.MustReadInput("input.big")
-	res := solveV2(input)
-	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

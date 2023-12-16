@@ -1,12 +1,9 @@
-package main
+package day09
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 	"strings"
-
-	"adventofcode.com/internal/utils"
 )
 
 type History []int
@@ -76,10 +73,4 @@ func solveV2(input string) int {
 		res += history.predictPrev()
 	}
 	return res
-}
-
-func main() {
-	input := utils.MustReadInput("input.big")
-	res := solveV2(input)
-	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

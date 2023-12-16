@@ -1,7 +1,6 @@
-package main
+package day01
 
 import (
-	"fmt"
 	"strings"
 
 	"adventofcode.com/internal/utils"
@@ -55,8 +54,18 @@ func solve(input string, getDigitFunc getDigitFuncDecl) int {
 	return res
 }
 
-func main() {
-	input := utils.MustReadInput("input.big.txt")
-	res := solve(input, getDigitV2)
-	utils.MustWriteOutput("output-v2.txt", fmt.Sprint(res))
+func SolveV1(input string) int {
+	res := 0
+	for _, line := range utils.NonEmptyLines(input) {
+		res += getCode(line, getDigitV1)
+	}
+	return res
+}
+
+func SolveV2(input string) int {
+	res := 0
+	for _, line := range utils.NonEmptyLines(input) {
+		res += getCode(line, getDigitV2)
+	}
+	return res
 }

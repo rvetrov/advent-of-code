@@ -67,7 +67,7 @@ def main():
 
     res = solve_v2(lines)
 
-    with open("y2023/day03/output-v2.big", "wt") as output_file:
+    with open("y2023/day03/output.v2", "wt") as output_file:
         print(res, file=output_file)
 
 

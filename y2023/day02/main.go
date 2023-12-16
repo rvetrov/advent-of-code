@@ -1,12 +1,10 @@
-package main
+package day02
 
 import (
 	"fmt"
 	"log"
 	"strconv"
 	"strings"
-
-	"adventofcode.com/internal/utils"
 )
 
 type CubeSet struct {
@@ -74,7 +72,7 @@ func (g *Game) MinCubeSet() *CubeSet {
 	return max
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	res := 0
 	lines := strings.Split(input, "\n")
 
@@ -88,7 +86,7 @@ func solveV1(input string) int {
 	return res
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	res := 0
 	lines := strings.Split(input, "\n")
 
@@ -97,10 +95,4 @@ func solveV2(input string) int {
 		res += game.MinCubeSet().Power()
 	}
 	return res
-}
-
-func main() {
-	input := utils.MustReadInput("input.big")
-	res := solveV2(input)
-	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

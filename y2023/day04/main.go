@@ -1,12 +1,9 @@
-package main
+package day04
 
 import (
-	"fmt"
 	"slices"
 	"strconv"
 	"strings"
-
-	"adventofcode.com/internal/utils"
 )
 
 func parseNumbers(str string) []int {
@@ -43,7 +40,7 @@ func splitAllCards(input string) []string {
 	return res
 }
 
-func solveV1(input string) int {
+func SolveV1(input string) int {
 	res := 0
 	for _, cardStr := range splitAllCards(input) {
 		score := cardScore(cardStr)
@@ -54,7 +51,7 @@ func solveV1(input string) int {
 	return res
 }
 
-func solveV2(input string) int {
+func SolveV2(input string) int {
 	cards := splitAllCards(input)
 	var scores = make([]int, len(cards))
 	for i := range scores {
@@ -72,10 +69,4 @@ func solveV2(input string) int {
 		}
 	}
 	return res
-}
-
-func main() {
-	input := utils.MustReadInput("input.big")
-	res := solveV2(input)
-	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

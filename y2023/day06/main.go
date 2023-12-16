@@ -1,4 +1,4 @@
-package main
+package day06
 
 import (
 	"fmt"
@@ -55,10 +55,4 @@ func solveV1(input string) int {
 
 func solveV2(input string) int {
 	return solveV1(input)
-}
-
-func main() {
-	input := utils.MustReadInput("input-v2.big")
-	res := solveV1(input)
-	utils.MustWriteOutput("output-v2.big", fmt.Sprint(res))
 }

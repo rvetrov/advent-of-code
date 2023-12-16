@@ -1,4 +1,4 @@
-package main
+package day02
 
 import (
 	"testing"
@@ -13,11 +13,11 @@ Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green`
 
 func TestV1(t *testing.T) {
-	res := solveV1(testCase)
+	res := SolveV1(testCase)
 	require.Equal(t, 8, res)
 }
 
 func TestV2(t *testing.T) {
-	res := solveV2(testCase)
+	res := SolveV2(testCase)
 	require.Equal(t, 2286, res)
 }
