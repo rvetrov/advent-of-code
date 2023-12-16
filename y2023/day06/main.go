@@ -2,31 +2,31 @@ package day06
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"adventofcode.com/internal/utils"
 )
 
-func parseState(input string) ([]int, []int) {
-	times := []int{}
-	distances := []int{}
+func parseState(input string, join bool) ([]int, []int) {
 	lines := utils.NonEmptyLines(input)
 
-	for _, parse := range []struct {
-		To   *[]int
-		Line string
-	}{
-		{&times, lines[0]},
-		{&distances, lines[1]},
-	} {
-		line, _ := strings.CutPrefix(parse.Line, ":")
-		for _, numStr := range strings.Split(line, " ") {
-			if num, err := strconv.Atoi(numStr); err == nil {
-				*parse.To = append(*parse.To, num)
-			}
-		}
+	_, line, _ := strings.Cut(lines[0], ":")
+	fmt.Println(lines[0])
+	fmt.Println(line)
+	if join {
+		line = strings.ReplaceAll(line, " ", "")
 	}
+	times := utils.ReadNumbers(line)
+	fmt.Println(line)
+
+	_, line, _ = strings.Cut(lines[1], ":")
+	fmt.Println(lines[1])
+	fmt.Println(line)
+	if join {
+		line = strings.ReplaceAll(line, " ", "")
+	}
+	distances := utils.ReadNumbers(line)
+	fmt.Println(line)
 
 	return times, distances
 }
@@ -42,9 +42,7 @@ func waysToWin(time, dist int) int {
 }
 
 func solveV1(input string) int {
-	times, distances := parseState(input)
-	fmt.Println(times)
-	fmt.Println(distances)
+	times, distances := parseState(input, false)
 
 	res := 1
 	for i := range times {
@@ -54,5 +52,11 @@ func solveV1(input string) int {
 }
 
 func solveV2(input string) int {
-	return solveV1(input)
+	times, distances := parseState(input, true)
+
+	res := 1
+	for i := range times {
+		res *= waysToWin(times[i], distances[i])
+	}
+	return res
 }
