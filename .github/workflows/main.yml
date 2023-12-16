@@ -1,0 +1,13 @@
+name: Advent of Code checks
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  test-advent-of-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: go test ./y2023/...
