@@ -61,7 +61,7 @@ func TestV1(t *testing.T) {
 }
 
 func TestV2(t *testing.T) {
-	field := utils.RotateCCW(utils.Lines(testCase1))
+	field := utils.RotateCCW(utils.NonEmptyLines(testCase1))
 	for _, expected := range utils.SplitByEmptyLine(expectedAfterCycles1) {
 		field = cycleTilts(field)
 

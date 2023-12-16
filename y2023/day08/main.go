@@ -56,7 +56,7 @@ func (m Map) FindLoop(position string) (int, Route) {
 }
 
 func newMap(input string) Map {
-	lines := utils.Lines(input)
+	lines := utils.NonEmptyLines(input)
 
 	edges := map[string]Crossroad{}
 	for i := 1; i < len(lines); i++ {

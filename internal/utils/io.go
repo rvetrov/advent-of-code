@@ -17,7 +17,7 @@ func MustWriteOutput(fileName string, text string) {
 	os.WriteFile(fileName, []byte(text), 0644)
 }
 
-func Lines(input string) []string {
+func NonEmptyLines(input string) []string {
 	res := []string{}
 	for _, line := range strings.Split(input, "\n") {
 		line = strings.TrimSpace(line)

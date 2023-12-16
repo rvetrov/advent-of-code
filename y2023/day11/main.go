@@ -41,7 +41,7 @@ func (f Field) Dist(g1, g2 Point, expansion int) int {
 
 func parseField(input string) Field {
 	f := Field{grid: []string{}}
-	lines := utils.Lines(input)
+	lines := utils.NonEmptyLines(input)
 	for _, line := range lines {
 		f.grid = append(f.grid, line)
 		f.emptyRows = append(f.emptyRows, strings.Count(line, ".") == len(line))

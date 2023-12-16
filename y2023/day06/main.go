@@ -11,7 +11,7 @@ import (
 func parseState(input string) ([]int, []int) {
 	times := []int{}
 	distances := []int{}
-	lines := utils.Lines(input)
+	lines := utils.NonEmptyLines(input)
 
 	for _, parse := range []struct {
 		To   *[]int

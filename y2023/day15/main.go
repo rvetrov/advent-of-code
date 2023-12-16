@@ -89,7 +89,7 @@ func NewOperation(s string) Operation {
 
 func parseOperations(input string) []Operation {
 	ops := []Operation{}
-	for _, line := range utils.Lines(input) {
+	for _, line := range utils.NonEmptyLines(input) {
 		for _, s := range strings.Split(line, ",") {
 			ops = append(ops, NewOperation(s))
 		}

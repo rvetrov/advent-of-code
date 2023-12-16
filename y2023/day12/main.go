@@ -69,7 +69,7 @@ func numberOfPossibleArrangements(field string, groups []int) int {
 }
 
 func solveV1(input string) int {
-	lines := utils.Lines(input)
+	lines := utils.NonEmptyLines(input)
 	res := 0
 	for _, line := range lines {
 		field, groups := parseField(line)
@@ -79,7 +79,7 @@ func solveV1(input string) int {
 }
 
 func solveV2(input string) int {
-	lines := utils.Lines(input)
+	lines := utils.NonEmptyLines(input)
 	res := 0
 	for _, line := range lines {
 		field, groups := parseField(line)
