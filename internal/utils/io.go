@@ -2,15 +2,24 @@ package utils
 
 import (
 	"os"
+	"strconv"
 	"strings"
 )
 
+func ReadInput(fileName string) (string, error) {
+	if input, err := os.ReadFile(fileName); err != nil {
+		return "", err
+	} else {
+		return string(input), nil
+	}
+}
+
 func MustReadInput(fileName string) string {
-	input, err := os.ReadFile(fileName)
+	input, err := ReadInput(fileName)
 	if err != nil {
 		panic(err)
 	}
-	return string(input)
+	return input
 }
 
 func MustWriteOutput(fileName string, text string) {
@@ -23,6 +32,16 @@ func NonEmptyLines(input string) []string {
 		line = strings.TrimSpace(line)
 		if len(line) > 0 {
 			res = append(res, line)
+		}
+	}
+	return res
+}
+
+func ReadNumbers(line string) []int {
+	res := []int{}
+	for _, numStr := range strings.Split(line, " ") {
+		if num, err := strconv.Atoi(numStr); err == nil {
+			res = append(res, num)
 		}
 	}
 	return res

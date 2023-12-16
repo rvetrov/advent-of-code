@@ -1,7 +1,6 @@
 package day06
 
 import (
-	"fmt"
 	"strings"
 
 	"adventofcode.com/internal/utils"
@@ -11,22 +10,16 @@ func parseState(input string, join bool) ([]int, []int) {
 	lines := utils.NonEmptyLines(input)
 
 	_, line, _ := strings.Cut(lines[0], ":")
-	fmt.Println(lines[0])
-	fmt.Println(line)
 	if join {
 		line = strings.ReplaceAll(line, " ", "")
 	}
 	times := utils.ReadNumbers(line)
-	fmt.Println(line)
 
 	_, line, _ = strings.Cut(lines[1], ":")
-	fmt.Println(lines[1])
-	fmt.Println(line)
 	if join {
 		line = strings.ReplaceAll(line, " ", "")
 	}
 	distances := utils.ReadNumbers(line)
-	fmt.Println(line)
 
 	return times, distances
 }
