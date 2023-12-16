@@ -10,4 +10,5 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - run: go version
       - run: go test ./y2023/...
