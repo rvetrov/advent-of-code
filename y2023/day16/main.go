@@ -9,16 +9,16 @@ import (
 
 type Tracer struct {
 	N, M      int
-	field     []string
+	grid      []string
 	energized map[string]bool
 	traced    map[string]bool
 }
 
-func NewTracer(field []string) *Tracer {
+func NewTracer(gr grid.Grid) *Tracer {
 	return &Tracer{
-		N:         len(field),
-		M:         len(field[0]),
-		field:     field,
+		N:         len(gr),
+		M:         len(gr[0]),
+		grid:      gr,
 		energized: make(map[string]bool),
 		traced:    make(map[string]bool),
 	}
@@ -35,7 +35,7 @@ func (t *Tracer) Beam(i, j int, dir grid.Direction) {
 	t.traced[beamLoc] = true
 	t.energized[fmt.Sprintf("%d,%d", i, j)] = true
 
-	ch := t.field[i][j]
+	ch := t.grid[i][j]
 	if ch == '.' ||
 		ch == '-' && (dir == grid.Left || dir == grid.Right) ||
 		ch == '|' && (dir == grid.Up || dir == grid.Down) {
@@ -82,16 +82,16 @@ func (t *Tracer) Clear() {
 }
 
 func SolveV1(input string) int {
-	field := utils.NonEmptyLines(input)
-	t := NewTracer(field)
+	gr := utils.NonEmptyLines(input)
+	t := NewTracer(gr)
 	t.Beam(0, 0, grid.Right)
 	return t.Energized()
 }
 
 func SolveV2(input string) int {
-	field := utils.NonEmptyLines(input)
+	gr := utils.NonEmptyLines(input)
 	res := 0
-	t := NewTracer(field)
+	t := NewTracer(gr)
 
 	for i := 0; i < t.N; i++ {
 		t.Beam(i, 0, grid.Right)
