@@ -68,7 +68,7 @@ func TestV2(t *testing.T) {
 		gr = cycleTilts(gr)
 
 		actualGrid := grid.RotateCW(gr)
-		require.Equal(t, expected, actualGrid)
+		require.EqualValues(t, expected, actualGrid)
 	}
 
 	res := SolveV2(testCase1)
