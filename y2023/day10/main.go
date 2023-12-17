@@ -1,36 +1,21 @@
 package day10
 
 import (
+	"adventofcode.com/internal/grid"
 	"adventofcode.com/internal/utils"
 )
-
-type Point struct{ X, Y int }
-
-func (p Point) Add(v Vector) Point {
-	return Point{p.X + v.DX, p.Y + v.DY}
-}
-
-func (p Point) Subtract(other Point) Vector {
-	return Vector{p.X - other.X, p.Y - other.Y}
-}
-
-type Vector struct{ DX, DY int }
-
-func (v Vector) Reversed() Vector {
-	return Vector{-v.DX, -v.DY}
-}
 
 const (
 	fieldGround = '.'
 )
 
 var (
-	north = Vector{-1, 0}
-	south = Vector{1, 0}
-	east  = Vector{0, 1}
-	west  = Vector{0, -1}
+	north = grid.Up
+	south = grid.Down
+	east  = grid.Right
+	west  = grid.Left
 
-	directions = map[byte][]Vector{
+	directions = map[byte][]grid.Direction{
 		'|':         {north, south},
 		'-':         {west, east},
 		'L':         {north, east},
@@ -43,24 +28,24 @@ var (
 )
 
 type Field struct {
-	Start    Point
+	Start    grid.Position
 	grid     []string
 	isOnLoop [][]bool
 	n        int
 	m        int
 }
 
-func (f Field) get(p Point) byte {
-	if p.X < 0 || f.n <= p.X || p.Y < 0 || f.m <= p.Y {
+func (f Field) get(p grid.Position) byte {
+	if p.Row < 0 || f.n <= p.Row || p.Col < 0 || f.m <= p.Col {
 		return fieldGround
 	}
-	return f.grid[p.X][p.Y]
+	return f.grid[p.Row][p.Col]
 }
 
-func (f Field) connected(p1, p2 Point) bool {
+func (f Field) connected(p1, p2 grid.Position) bool {
 	for _, check := range []struct {
 		symbol    byte
-		direction Vector
+		direction grid.Direction
 	}{
 		{f.get(p1), p2.Subtract(p1)},
 		{f.get(p2), p1.Subtract(p2)},
@@ -79,14 +64,14 @@ func (f Field) connected(p1, p2 Point) bool {
 	return true
 }
 
-func (f Field) FindLoop(start Point) int {
+func (f Field) FindLoop(start grid.Position) int {
 	res := 0
 	cur := start
-	prevDirection := Vector{}
+	prevDirection := grid.Direction{}
 	for {
-		f.isOnLoop[cur.X][cur.Y] = true
+		f.isOnLoop[cur.Row][cur.Col] = true
 		prevDirectionReversed := prevDirection.Reversed()
-		for _, vec := range []Vector{north, south, west, east} {
+		for _, vec := range []grid.Direction{north, south, west, east} {
 			cand := cur.Add(vec)
 			if vec != prevDirectionReversed && f.connected(cur, cand) {
 				cur = cand
@@ -102,7 +87,7 @@ func (f Field) FindLoop(start Point) int {
 	return res
 }
 
-func (f Field) EnclosedByLoop(start Point) int {
+func (f Field) EnclosedByLoop(start grid.Position) int {
 	f.FindLoop(start)
 	res := 0
 	for i, line := range f.grid {
@@ -110,9 +95,9 @@ func (f Field) EnclosedByLoop(start Point) int {
 
 		for j := 0; j < len(line); j++ {
 			if f.isOnLoop[i][j] {
-				inVec := Vector{}
-				cur := Point{i, j}
-				for _, dir := range []Vector{north, south} {
+				inVec := grid.Direction{}
+				cur := grid.Position{Row: i, Col: j}
+				for _, dir := range []grid.Direction{north, south} {
 					if f.connected(cur, cur.Add(dir)) {
 						inVec = dir
 						break
@@ -125,7 +110,7 @@ func (f Field) EnclosedByLoop(start Point) int {
 				} else {
 					j++
 					for {
-						cur = Point{i, j}
+						cur = grid.Position{Row: i, Col: j}
 						if f.connected(cur, cur.Add(outVec)) {
 							insideTheLoop = !insideTheLoop
 							break
@@ -152,7 +137,7 @@ func parseField(input string) Field {
 		f.grid = append(f.grid, line)
 		for j := 0; j < len(line); j++ {
 			if line[j] == 'S' {
-				f.Start = Point{len(f.grid) - 1, j}
+				f.Start = grid.Position{Row: len(f.grid) - 1, Col: j}
 			}
 		}
 	}

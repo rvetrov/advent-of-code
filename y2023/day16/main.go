@@ -3,16 +3,8 @@ package day16
 import (
 	"fmt"
 
+	"adventofcode.com/internal/grid"
 	"adventofcode.com/internal/utils"
-)
-
-type Vector struct{ DX, DY int }
-
-var (
-	vecUp    = Vector{-1, 0}
-	vecDown  = Vector{1, 0}
-	vecRight = Vector{0, 1}
-	vecLeft  = Vector{0, -1}
 )
 
 type Tracer struct {
@@ -32,11 +24,11 @@ func NewTracer(field []string) *Tracer {
 	}
 }
 
-func (t *Tracer) Beam(i, j int, dir Vector) {
+func (t *Tracer) Beam(i, j int, dir grid.Direction) {
 	if i < 0 || t.N <= i || j < 0 || t.M <= j {
 		return
 	}
-	beamLoc := fmt.Sprintf("%d,%d,%d,%d", i, j, dir.DX, dir.DY)
+	beamLoc := fmt.Sprintf("%d,%d,%d,%d", i, j, dir.DR, dir.DC)
 	if t.traced[beamLoc] {
 		return
 	}
@@ -45,38 +37,38 @@ func (t *Tracer) Beam(i, j int, dir Vector) {
 
 	ch := t.field[i][j]
 	if ch == '.' ||
-		ch == '-' && (dir == vecLeft || dir == vecRight) ||
-		ch == '|' && (dir == vecUp || dir == vecDown) {
+		ch == '-' && (dir == grid.Left || dir == grid.Right) ||
+		ch == '|' && (dir == grid.Up || dir == grid.Down) {
 
-		t.Beam(i+dir.DX, j+dir.DY, dir)
+		t.Beam(i+dir.DR, j+dir.DC, dir)
 	}
 
-	if ch == '-' && (dir == vecUp || dir == vecDown) ||
-		ch == '\\' && dir == vecUp ||
-		ch == '/' && dir == vecDown {
+	if ch == '-' && (dir == grid.Up || dir == grid.Down) ||
+		ch == '\\' && dir == grid.Up ||
+		ch == '/' && dir == grid.Down {
 
-		t.Beam(i+vecLeft.DX, j+vecLeft.DY, vecLeft)
+		t.Beam(i+grid.Left.DR, j+grid.Left.DC, grid.Left)
 	}
 
-	if ch == '-' && (dir == vecUp || dir == vecDown) ||
-		ch == '\\' && dir == vecDown ||
-		ch == '/' && dir == vecUp {
+	if ch == '-' && (dir == grid.Up || dir == grid.Down) ||
+		ch == '\\' && dir == grid.Down ||
+		ch == '/' && dir == grid.Up {
 
-		t.Beam(i+vecRight.DX, j+vecRight.DY, vecRight)
+		t.Beam(i+grid.Right.DR, j+grid.Right.DC, grid.Right)
 	}
 
-	if ch == '|' && (dir == vecLeft || dir == vecRight) ||
-		ch == '\\' && dir == vecLeft ||
-		ch == '/' && dir == vecRight {
+	if ch == '|' && (dir == grid.Left || dir == grid.Right) ||
+		ch == '\\' && dir == grid.Left ||
+		ch == '/' && dir == grid.Right {
 
-		t.Beam(i+vecUp.DX, j+vecUp.DY, vecUp)
+		t.Beam(i+grid.Up.DR, j+grid.Up.DC, grid.Up)
 	}
 
-	if ch == '|' && (dir == vecLeft || dir == vecRight) ||
-		ch == '\\' && dir == vecRight ||
-		ch == '/' && dir == vecLeft {
+	if ch == '|' && (dir == grid.Left || dir == grid.Right) ||
+		ch == '\\' && dir == grid.Right ||
+		ch == '/' && dir == grid.Left {
 
-		t.Beam(i+vecDown.DX, j+vecDown.DY, vecDown)
+		t.Beam(i+grid.Down.DR, j+grid.Down.DC, grid.Down)
 	}
 }
 
@@ -92,7 +84,7 @@ func (t *Tracer) Clear() {
 func SolveV1(input string) int {
 	field := utils.NonEmptyLines(input)
 	t := NewTracer(field)
-	t.Beam(0, 0, vecRight)
+	t.Beam(0, 0, grid.Right)
 	return t.Energized()
 }
 
@@ -102,21 +94,21 @@ func SolveV2(input string) int {
 	t := NewTracer(field)
 
 	for i := 0; i < t.N; i++ {
-		t.Beam(i, 0, vecRight)
+		t.Beam(i, 0, grid.Right)
 		res = max(res, t.Energized())
 		t.Clear()
 
-		t.Beam(i, t.M-1, vecLeft)
+		t.Beam(i, t.M-1, grid.Left)
 		res = max(res, t.Energized())
 		t.Clear()
 	}
 
 	for j := 0; j < t.M; j++ {
-		t.Beam(0, j, vecDown)
+		t.Beam(0, j, grid.Down)
 		res = max(res, t.Energized())
 		t.Clear()
 
-		t.Beam(t.N-1, j, vecUp)
+		t.Beam(t.N-1, j, grid.Up)
 		res = max(res, t.Energized())
 		t.Clear()
 	}
