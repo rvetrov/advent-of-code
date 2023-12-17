@@ -5,6 +5,7 @@ import (
 	"log"
 	"slices"
 
+	"adventofcode.com/internal/grid"
 	"adventofcode.com/internal/utils"
 )
 
@@ -27,7 +28,7 @@ func findHorizontalReflectionLines(field []string) []int {
 
 func findReflectionLines(field []string) ([]int, []int) {
 	rowRefl := findHorizontalReflectionLines(field)
-	rotated := utils.Transpose(field)
+	rotated := grid.Transpose(field)
 	colRefl := findHorizontalReflectionLines(rotated)
 	return rowRefl, colRefl
 }

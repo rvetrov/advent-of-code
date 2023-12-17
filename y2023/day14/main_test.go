@@ -3,8 +3,10 @@ package day14
 import (
 	"testing"
 
-	"adventofcode.com/internal/utils"
 	"github.com/stretchr/testify/require"
+
+	"adventofcode.com/internal/grid"
+	"adventofcode.com/internal/utils"
 )
 
 const testCase1 = `
@@ -61,11 +63,11 @@ func TestV1(t *testing.T) {
 }
 
 func TestV2(t *testing.T) {
-	field := utils.RotateCCW(utils.NonEmptyLines(testCase1))
+	field := grid.RotateCCW(utils.NonEmptyLines(testCase1))
 	for _, expected := range utils.SplitByEmptyLine(expectedAfterCycles1) {
 		field = cycleTilts(field)
 
-		actualField := utils.RotateCW(field)
+		actualField := grid.RotateCW(field)
 		require.Equal(t, expected, actualField)
 	}
 

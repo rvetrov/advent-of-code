@@ -1,4 +1,4 @@
-package utils
+package grid
 
 import (
 	"fmt"
