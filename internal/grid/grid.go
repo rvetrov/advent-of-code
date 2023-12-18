@@ -7,6 +7,21 @@ import (
 
 type Grid []string
 
+func (g Grid) Rows() int {
+	return len(g)
+}
+
+func (g Grid) Cols() int {
+	if len(g) == 0 {
+		return 0
+	}
+	return len(g[0])
+}
+
+func (g Grid) Contains(p Position) bool {
+	return 0 <= p.Row && p.Row < len(g) && 0 <= p.Col && p.Col < len(g[p.Row])
+}
+
 func Print(grid Grid) {
 	for _, line := range grid {
 		fmt.Println(line)

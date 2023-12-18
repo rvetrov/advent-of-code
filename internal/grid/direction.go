@@ -1,7 +1,13 @@
 package grid
 
+import "fmt"
+
 type Position struct {
 	Row, Col int
+}
+
+func (p Position) String() string {
+	return fmt.Sprintf("(%d,%d)", p.Row, p.Col)
 }
 
 func (p Position) Add(d Direction) Position {
@@ -16,8 +22,12 @@ type Direction struct {
 	DR, DC int
 }
 
-func (v Direction) Reversed() Direction {
-	return Direction{-v.DR, -v.DC}
+func (d Direction) String() string {
+	return fmt.Sprintf("<%d,%d>", d.DR, d.DC)
+}
+
+func (d Direction) Reversed() Direction {
+	return Direction{-d.DR, -d.DC}
 }
 
 var (
