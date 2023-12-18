@@ -30,9 +30,24 @@ func (d Direction) Reversed() Direction {
 	return Direction{-d.DR, -d.DC}
 }
 
+func (d Direction) Multiplied(x int) Direction {
+	return Direction{d.DR * x, d.DC * x}
+}
+
+func (d Direction) AsPosition() Position {
+	return Position{Row: d.DR, Col: d.DC}
+}
+
 var (
 	Up    = Direction{-1, 0}
 	Down  = Direction{1, 0}
 	Right = Direction{0, 1}
 	Left  = Direction{0, -1}
+
+	FourSides = []Direction{
+		Up,
+		Right,
+		Down,
+		Left,
+	}
 )
