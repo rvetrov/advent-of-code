@@ -22,6 +22,15 @@ func (g Grid) Contains(p Position) bool {
 	return 0 <= p.Row && p.Row < len(g) && 0 <= p.Col && p.Col < len(g[p.Row])
 }
 
+func (g Grid) EncodePosition(p Position) int {
+	return p.Row*g.Cols() + p.Col
+}
+
+func (g Grid) DecodePosition(v int) Position {
+	rowSize := g.Cols()
+	return Position{Row: v / rowSize, Col: v % rowSize}
+}
+
 func Print(grid Grid) {
 	for _, line := range grid {
 		fmt.Println(line)

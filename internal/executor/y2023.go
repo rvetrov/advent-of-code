@@ -22,6 +22,7 @@ import (
 	"adventofcode.com/y2023/day18"
 	"adventofcode.com/y2023/day19"
 	"adventofcode.com/y2023/day20"
+	"adventofcode.com/y2023/day21"
 )
 
 type taskSolver func(string) int
@@ -50,6 +51,7 @@ var tasks2023 = map[string]Task{
 	"day18": {[]taskSolver{day18.SolveV1, day18.SolveV2}},
 	"day19": {[]taskSolver{day19.SolveV1, day19.SolveV2}},
 	"day20": {[]taskSolver{day20.SolveV1, day20.SolveV2}},
+	"day21": {[]taskSolver{day21.SolveV1, day21.SolveV2}},
 }
 
 var KnownTasks2023 = maps.Keys(tasks2023)
