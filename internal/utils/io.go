@@ -30,7 +30,7 @@ func MustWriteOutput(fileName string, text string) {
 }
 
 func NonEmptyLines(input string) []string {
-	res := []string{}
+	var res []string
 	for _, line := range strings.Split(input, "\n") {
 		line = strings.TrimSpace(line)
 		if len(line) > 0 {

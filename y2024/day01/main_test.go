@@ -6,18 +6,19 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const testCase1 string = `3   4
+4   3
+2   5
+1   3
+3   9
+3   3`
+
 func TestV1(t *testing.T) {
-	s := `1`
-
-	res := SolveV1(s)
-
-	require.Equal(t, 1, res)
+	res := SolveV1(testCase1)
+	require.Equal(t, 11, res)
 }
 
 func TestV2(t *testing.T) {
-	s := `2`
-
-	res := SolveV2(s)
-
-	require.Equal(t, 2, res)
+	res := SolveV2(testCase1)
+	require.Equal(t, 31, res)
 }
