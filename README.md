@@ -3,8 +3,8 @@
 Web-site: https://adventofcode.com/
 
 
-# To run
+# Run tests
 
 ```bash
-
+go test ./...
 ```
