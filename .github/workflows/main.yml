@@ -13,7 +13,9 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.21.5
+          go-version: 1.22.5
       - run: go test ./y2023/...
       - run: go run ./cmd/solver/main.go 2023 all
+      - run: go test ./y2024/...
+      - run: go run ./cmd/solver/main.go 2024 all
       - run: git status

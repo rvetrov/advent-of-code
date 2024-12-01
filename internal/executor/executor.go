@@ -3,8 +3,10 @@ package executor
 import (
 	"errors"
 	"fmt"
+	"golang.org/x/exp/maps"
 	"os"
 	"path"
+	"sort"
 	"strconv"
 	"time"
 
@@ -13,20 +15,20 @@ import (
 
 var errNotFound = fmt.Errorf("task not found")
 
-type executor struct {
+type Executor struct {
+	Name    string
 	path    string
 	solvers map[string]Task
 }
 
-func New2023(path string) *executor {
-	return &executor{
-		path:    path,
-		solvers: tasks2023,
-	}
+func (e *Executor) KnownTasks() []string {
+	tasks := maps.Keys(e.solvers)
+	sort.Strings(tasks)
+	return tasks
 }
 
-func (e *executor) Solve(taskNames []string) error {
-	errs := []error{}
+func (e *Executor) Solve(taskNames []string) error {
+	var errs []error
 
 	for _, taskName := range taskNames {
 		if task, found := e.solvers[taskName]; !found {
@@ -39,7 +41,7 @@ func (e *executor) Solve(taskNames []string) error {
 	return errors.Join(errs...)
 }
 
-func (e *executor) solveTask(taskName string, t Task) error {
+func (e *Executor) solveTask(taskName string, t Task) error {
 	inputPath := path.Join(e.path, taskName, "input.big")
 	if _, err := os.Stat(inputPath); err != nil {
 		return err
@@ -56,7 +58,9 @@ func (e *executor) solveTask(taskName string, t Task) error {
 			ms := int(time.Since(started).Milliseconds())
 			fmt.Printf("%s: %v -> %v, %d.%03ds\n", taskName, inputPath, resultPath, ms/1000, ms%1000)
 
-			os.WriteFile(resultPath, []byte(strconv.Itoa(result)), 0644)
+			if err = os.WriteFile(resultPath, []byte(strconv.Itoa(result)), 0644); err != nil {
+				return err
+			}
 		}
 	}
 	return nil

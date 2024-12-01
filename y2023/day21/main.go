@@ -48,12 +48,24 @@ func SolveV1(input string) int {
 }
 
 func SolveV2(input string) int {
+	/*
+		leftUpperCorner := grid.Position{Row: 0, Col: 0}
+		leftLowerCorner := grid.Position{Row: gr.Rows() - 1, Col: 0}
+		rightUpperCorner := grid.Position{Row: 0, Col: gr.Cols() - 1}
+		rightLowerCorner := grid.Position{Row: gr.Rows() - 1, Col: gr.Cols() - 1}
+
+		steps := 26501365 // 26501365 == 131 * 202300 + 65
+		size := 131
+
+		x := (steps - 66) % 131
+		additionalSteps := steps % size
+	*/
 	gr := utils.NonEmptyLines(input)
+	start := findStart(gr)
 
 	steps := 26501365 // 26501365 == 131 * 202300 + 65
 	size := 131
 	additionalSteps := steps % size
 
-	start := findStart(gr)
 	return countVisited(gr, start, additionalSteps)
 }

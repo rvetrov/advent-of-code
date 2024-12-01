@@ -122,17 +122,19 @@ func lagoonVolume(gr grid.Grid) int {
 func SolveV1(input string) int {
 	digs := parseDigs(input)
 	gr := buildGrid(digs)
+	grid.Print(gr)
 
 	res := lagoonVolume(gr)
 	return res
 }
 
 func SolveV2(input string) int {
-	digs := parseDigs(input)
-	for _, dig := range digs {
-		dig = dig.ExtractColor()
-		fmt.Println(dig)
-	}
-
+	// digs := parseDigs(input)
+	// for i, dig := range digs {
+	// 	digs[i] = dig.ExtractColor()
+	// 	fmt.Println(digs[i])
+	// }
+	// gr := buildGrid(digs)
+	// fmt.Println(gr.Rows(), gr.Cols())
 	return 0
 }

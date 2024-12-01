@@ -1,11 +1,13 @@
 module adventofcode.com
 
-go 1.21
+go 1.22.0
+
+toolchain go1.22.5
 
 require (
-	github.com/spf13/cobra v1.8.0
-	github.com/stretchr/testify v1.8.4
-	golang.org/x/exp v0.0.0-20231214170342-aacd6d4b4611
+	github.com/spf13/cobra v1.8.1
+	github.com/stretchr/testify v1.10.0
+	golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f
 )
 
 require (
