@@ -122,7 +122,7 @@ func lagoonVolume(gr grid.Grid) int {
 func SolveV1(input string) int {
 	digs := parseDigs(input)
 	gr := buildGrid(digs)
-	grid.Print(gr)
+	//grid.Print(gr)
 
 	res := lagoonVolume(gr)
 	return res
