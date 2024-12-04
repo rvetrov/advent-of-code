@@ -30,6 +30,10 @@ func (d Direction) Reversed() Direction {
 	return Direction{-d.DR, -d.DC}
 }
 
+func (d Direction) Add(delta Direction) Direction {
+	return Direction{d.DR + delta.DR, d.DC + delta.DC}
+}
+
 func (d Direction) Multiplied(x int) Direction {
 	return Direction{d.DR * x, d.DC * x}
 }
@@ -44,10 +48,12 @@ var (
 	Right = Direction{0, 1}
 	Left  = Direction{0, -1}
 
-	FourSides = []Direction{
-		Up,
-		Right,
-		Down,
-		Left,
-	}
+	UpRight   = Up.Add(Right)
+	UpLeft    = Up.Add(Left)
+	DownRight = Down.Add(Right)
+	DownLeft  = Down.Add(Left)
+
+	FourSides = []Direction{Up, Right, Down, Left}
+
+	EightSides = []Direction{Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft}
 )

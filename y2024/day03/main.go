@@ -1,10 +1,11 @@
 package day03
 
 import (
-	"adventofcode.com/internal/utils"
 	"fmt"
 	"regexp"
 	"strconv"
+
+	"adventofcode.com/internal/utils"
 )
 
 type Instruction string

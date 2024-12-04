@@ -22,6 +22,13 @@ func (g Grid) Contains(p Position) bool {
 	return 0 <= p.Row && p.Row < len(g) && 0 <= p.Col && p.Col < len(g[p.Row])
 }
 
+func (g Grid) At(p Position) (byte, bool) {
+	if !g.Contains(p) {
+		return 0, false
+	}
+	return g[p.Row][p.Col], true
+}
+
 func (g Grid) EncodePosition(p Position) int {
 	return p.Row*g.Cols() + p.Col
 }
