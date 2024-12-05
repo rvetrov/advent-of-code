@@ -46,5 +46,5 @@ func TestSolveV1(t *testing.T) {
 
 func TestSolveV2(t *testing.T) {
 	res := SolveV2(testCase0)
-	require.Equal(t, 0, res)
+	require.Equal(t, 123, res)
 }

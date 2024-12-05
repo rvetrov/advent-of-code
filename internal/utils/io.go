@@ -14,21 +14,6 @@ func ReadInput(fileName string) (string, error) {
 	}
 }
 
-func MustReadInput(fileName string) string {
-	input, err := ReadInput(fileName)
-	if err != nil {
-		panic(err)
-	}
-	return input
-}
-
-func MustWriteOutput(fileName string, text string) {
-	err := os.WriteFile(fileName, []byte(text), 0644)
-	if err != nil {
-		panic(err)
-	}
-}
-
 func NonEmptyLines(input string) []string {
 	var res []string
 	for _, line := range strings.Split(input, "\n") {
@@ -53,20 +38,20 @@ func ReadNumbers(line string) []int {
 func SplitByEmptyLine(input string) [][]string {
 	var res [][]string
 
-	var field []string
+	var textBlock []string
 	for _, line := range strings.Split(input, "\n") {
 		line = strings.TrimSpace(line)
 		if len(line) > 0 {
-			field = append(field, line)
+			textBlock = append(textBlock, line)
 		} else {
-			if len(field) > 0 {
-				res = append(res, field)
+			if len(textBlock) > 0 {
+				res = append(res, textBlock)
 			}
-			field = []string{}
+			textBlock = []string{}
 		}
 	}
-	if len(field) > 0 {
-		res = append(res, field)
+	if len(textBlock) > 0 {
+		res = append(res, textBlock)
 	}
 	return res
 }
