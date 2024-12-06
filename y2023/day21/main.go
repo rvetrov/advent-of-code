@@ -8,15 +8,7 @@ import (
 type VisitMap map[int]int
 
 func findStart(gr grid.Grid) grid.Position {
-	n, m := gr.Rows(), gr.Cols()
-	for i := 0; i < n; i++ {
-		for j := 0; j < m; j++ {
-			if gr[i][j] == 'S' {
-				return grid.Position{Row: i, Col: j}
-			}
-		}
-	}
-	return grid.Position{}
+	return gr.FindPosition('S')
 }
 
 func expand(gr grid.Grid, positions VisitMap) VisitMap {

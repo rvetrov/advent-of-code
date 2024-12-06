@@ -7,15 +7,26 @@ import (
 )
 
 const (
-	testCase0 = ``
+	testCase0 = `
+....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...
+`
 )
 
 func TestSolveV1(t *testing.T) {
 	res := SolveV1(testCase0)
-	require.Equal(t, 0, res)
+	require.Equal(t, 41, res)
 }
 
 func TestSolveV2(t *testing.T) {
 	res := SolveV2(testCase0)
-	require.Equal(t, 0, res)
+	require.Equal(t, 6, res)
 }

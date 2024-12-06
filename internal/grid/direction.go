@@ -42,6 +42,13 @@ func (d Direction) AsPosition() Position {
 	return Position{Row: d.DR, Col: d.DC}
 }
 
+func (d Direction) TurnCW() Direction {
+	return Direction{
+		DR: d.DC,
+		DC: -d.DR,
+	}
+}
+
 var (
 	Up    = Direction{-1, 0}
 	Down  = Direction{1, 0}

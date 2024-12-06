@@ -29,6 +29,18 @@ func (g Grid) At(p Position) (byte, bool) {
 	return g[p.Row][p.Col], true
 }
 
+func (g Grid) FindPosition(ch byte) Position {
+	n, m := g.Rows(), g.Cols()
+	for i := 0; i < n; i++ {
+		for j := 0; j < m; j++ {
+			if g[i][j] == ch {
+				return Position{Row: i, Col: j}
+			}
+		}
+	}
+	return Position{}
+}
+
 func (g Grid) EncodePosition(p Position) int {
 	return p.Row*g.Cols() + p.Col
 }
