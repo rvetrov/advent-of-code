@@ -20,7 +20,7 @@ func (d Dig) Dir() grid.Direction {
 
 func (d Dig) ExtractColor() Dig {
 	res := Dig{Color: d.Color}
-	fmt.Sscanf(d.Color[:5], "%x", &res.Dist)
+	_, _ = fmt.Sscanf(d.Color[:5], "%x", &res.Dist)
 	switch d.Color[5] {
 	case '0':
 		res.dir = "R"
@@ -84,18 +84,14 @@ func buildGrid(digs []Dig) grid.Grid {
 		}
 	}
 
-	res := make(grid.Grid, n)
-	for i, line := range gr {
-		res[i] = string(line)
-	}
-	return res
+	return grid.NewFromBytes(gr)
 }
 
 func examineExterior(pos grid.Position, gr grid.Grid, visited []bool) int {
-	if !gr.Contains(pos) || gr[pos.Row][pos.Col] != '.' || visited[pos.Row*gr.Cols()+pos.Col] {
+	if ch, ok := gr.At(pos); !ok || ch != '.' || visited[gr.EncodePosition(pos)] {
 		return 0
 	}
-	visited[pos.Row*gr.Cols()+pos.Col] = true
+	visited[gr.EncodePosition(pos)] = true
 	res := 1
 	for _, dir := range grid.FourSides {
 		res += examineExterior(pos.Add(dir), gr, visited)
@@ -128,7 +124,7 @@ func SolveV1(input string) int {
 	return res
 }
 
-func SolveV2(input string) int {
+func SolveV2(_ string) int {
 	// digs := parseDigs(input)
 	// for i, dig := range digs {
 	// 	digs[i] = dig.ExtractColor()

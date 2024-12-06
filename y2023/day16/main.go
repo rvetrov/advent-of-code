@@ -16,9 +16,9 @@ type Tracer struct {
 
 func NewTracer(gr grid.Grid) *Tracer {
 	return &Tracer{
-		N:         len(gr),
-		M:         len(gr[0]),
-		grid:      gr,
+		N:         gr.Rows(),
+		M:         gr.Cols(),
+		grid:      gr.Lines(),
 		energized: make(map[string]bool),
 		traced:    make(map[string]bool),
 	}
@@ -82,14 +82,14 @@ func (t *Tracer) Clear() {
 }
 
 func SolveV1(input string) int {
-	gr := utils.NonEmptyLines(input)
+	gr := grid.New(utils.NonEmptyLines(input))
 	t := NewTracer(gr)
 	t.Beam(0, 0, grid.Right)
 	return t.Energized()
 }
 
 func SolveV2(input string) int {
-	gr := utils.NonEmptyLines(input)
+	gr := grid.New(utils.NonEmptyLines(input))
 	res := 0
 	t := NewTracer(gr)
 

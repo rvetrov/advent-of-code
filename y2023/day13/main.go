@@ -9,11 +9,12 @@ import (
 )
 
 func findHorizontalReflectionLines(gr grid.Grid) []int {
-	res := []int{}
-	for i := 1; i < len(gr); i++ {
+	var res []int
+	lines := gr.Lines()
+	for i := 1; i < len(lines); i++ {
 		found := true
-		for j := 0; i+j < len(gr) && i-1-j >= 0; j++ {
-			if gr[i+j] != gr[i-1-j] {
+		for j := 0; i+j < len(lines) && i-1-j >= 0; j++ {
+			if lines[i+j] != lines[i-1-j] {
 				found = false
 				break
 			}
@@ -50,7 +51,8 @@ func encodeReflections(rows, cols, rowExcludes, colExcludes []int) int {
 func SolveV1(input string) int {
 	grids := utils.SplitByEmptyLine(input)
 	res := 0
-	for _, gr := range grids {
+	for _, lines := range grids {
+		gr := grid.New(lines)
 		if rr, cr := findReflectionLines(gr); len(rr) == 1 || len(cr) == 1 {
 			res += encodeReflections(rr, cr, nil, nil)
 		} else {
@@ -61,8 +63,9 @@ func SolveV1(input string) int {
 }
 
 func alternativeReflection(gr grid.Grid, origRows, origCols []int) ([]int, []int) {
-	for i := 0; i < len(gr); i++ {
-		origLine := gr[i]
+	lines := gr.Lines()
+	for i := 0; i < len(lines); i++ {
+		origLine := lines[i]
 		lineBytes := []byte(origLine)
 		for j, ch := range lineBytes {
 			if ch == '.' {
@@ -70,16 +73,16 @@ func alternativeReflection(gr grid.Grid, origRows, origCols []int) ([]int, []int
 			} else {
 				lineBytes[j] = '.'
 			}
-			gr[i] = string(lineBytes)
+			lines[i] = string(lineBytes)
 
-			if rr, cr := findReflectionLines(gr); encodeReflections(rr, cr, origRows, origCols) > 0 {
+			if rr, cr := findReflectionLines(grid.New(lines)); encodeReflections(rr, cr, origRows, origCols) > 0 {
 				return rr, cr
 			}
 
 			lineBytes[j] = ch
 		}
 
-		gr[i] = origLine
+		lines[i] = origLine
 	}
 	grid.Print(gr)
 	log.Fatalln("Failed to found")
@@ -89,7 +92,8 @@ func alternativeReflection(gr grid.Grid, origRows, origCols []int) ([]int, []int
 func SolveV2(input string) int {
 	grids := utils.SplitByEmptyLine(input)
 	res := 0
-	for _, gr := range grids {
+	for _, lines := range grids {
+		gr := grid.New(lines)
 		if origRows, origCols := findReflectionLines(gr); len(origRows) == 1 || len(origCols) == 1 {
 			rr, cr := alternativeReflection(gr, origRows, origCols)
 			res += encodeReflections(rr, cr, origRows, origCols)

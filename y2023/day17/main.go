@@ -41,7 +41,7 @@ func (rc regularCrucible) Moves(state MoveState) []MoveState {
 	return res
 }
 
-func (rc regularCrucible) CanStop(state MoveState) bool {
+func (rc regularCrucible) CanStop(_ MoveState) bool {
 	return true
 }
 
@@ -99,8 +99,8 @@ func (s *Solver) visitPosition(state MoveState, dist int, mover Crucible) {
 }
 
 func (s *Solver) heatLoss(p grid.Position) int {
-	if s.grid.Contains(p) {
-		return int(s.grid[p.Row][p.Col]) - int('0')
+	if ch, ok := s.grid.At(p); ok {
+		return int(ch) - int('0')
 	}
 	return 0
 }
@@ -163,7 +163,7 @@ func (h *Heap) Pop() any {
 }
 
 func solve(input string, mover Crucible) int {
-	gr := grid.Grid(utils.NonEmptyLines(input))
+	gr := grid.New(utils.NonEmptyLines(input))
 
 	st := NewSolver(gr)
 	startPos := MoveState{Pos: grid.Position{Row: 0, Col: 0}, Dir: grid.Right, Steps: 0}

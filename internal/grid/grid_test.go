@@ -6,10 +6,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var testGrid1 = Grid{"qwe", "asd"}
-var testGrid2 = Grid{"aq", "sw", "de"}
-var testGrid3 = Grid{"dsa", "ewq"}
-var testGrid4 = Grid{"ed", "ws", "qa"}
+var testGrid1 = New([]string{"qwe", "asd"})
+var testGrid2 = New([]string{"aq", "sw", "de"})
+var testGrid3 = New([]string{"dsa", "ewq"})
+var testGrid4 = New([]string{"ed", "ws", "qa"})
 
 func TestRotation(t *testing.T) {
 	gr := testGrid1

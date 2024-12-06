@@ -38,31 +38,32 @@ func weighLine(line string) (res int) {
 }
 
 func SolveV1(input string) int {
-	gr := grid.RotateCCW(utils.NonEmptyLines(input))
+	gr := grid.RotateCCW(grid.New(utils.NonEmptyLines(input)))
 	res := 0
-	for _, line := range gr {
+	for _, line := range gr.Lines() {
 		res += weighLine(tiltLeft(line))
 	}
 	return res
 }
 
-func cycleTilts(field []string) []string {
+func cycleTilts(gr grid.Grid) grid.Grid {
 	for rotNum := 0; rotNum < 4; rotNum++ {
-		for i, line := range field {
-			field[i] = tiltLeft(line)
+		var newLines []string
+		for _, line := range gr.Lines() {
+			newLines = append(newLines, tiltLeft(line))
 		}
-		field = grid.RotateCW(field)
+		gr = grid.RotateCW(grid.New(newLines))
 	}
-	return field
+	return gr
 }
 
 func SolveV2(input string) int {
-	gr := grid.RotateCCW(utils.NonEmptyLines(input))
+	gr := grid.RotateCCW(grid.New(utils.NonEmptyLines(input)))
 	cache := map[string]int{}
 
 	totalRotations := 1000000000
 	for step := 0; step < totalRotations; step++ {
-		fingerprint := strings.Join(gr, "")
+		fingerprint := strings.Join(gr.Lines(), "")
 		if prevStep, ok := cache[fingerprint]; ok {
 			cycleLen := step - prevStep
 			step += cycleLen * ((totalRotations - step) / cycleLen)
@@ -73,7 +74,7 @@ func SolveV2(input string) int {
 	}
 
 	res := 0
-	for _, line := range gr {
+	for _, line := range gr.Lines() {
 		res += weighLine(line)
 	}
 	return res

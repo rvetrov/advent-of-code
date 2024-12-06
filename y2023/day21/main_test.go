@@ -1,6 +1,7 @@
 package day21
 
 import (
+	"adventofcode.com/internal/grid"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -23,7 +24,7 @@ const testCase1 = `
 `
 
 func TestV1(t *testing.T) {
-	gr := utils.NonEmptyLines(testCase1)
+	gr := grid.New(utils.NonEmptyLines(testCase1))
 	start := findStart(gr)
 
 	for _, tc := range []struct{ steps, expected int }{
@@ -38,7 +39,7 @@ func TestV1(t *testing.T) {
 }
 
 func TestV2(t *testing.T) {
-	gr := utils.NonEmptyLines(testCase1)
+	gr := grid.New(utils.NonEmptyLines(testCase1))
 	start := findStart(gr)
 
 	for _, tc := range []struct{ steps, expected int }{

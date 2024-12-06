@@ -17,7 +17,7 @@ func expand(gr grid.Grid, positions VisitMap) VisitMap {
 		pos := gr.DecodePosition(encodedPos)
 		for _, dir := range grid.FourSides {
 			newPos := pos.Add(dir)
-			if gr.Contains(newPos) && gr[newPos.Row][newPos.Col] != '#' {
+			if ch, ok := gr.At(newPos); ok && ch != '#' {
 				vm[gr.EncodePosition(newPos)] += cnt
 			}
 		}
@@ -34,13 +34,13 @@ func countVisited(gr grid.Grid, start grid.Position, steps int) int {
 }
 
 func SolveV1(input string) int {
-	gr := utils.NonEmptyLines(input)
+	gr := grid.New(utils.NonEmptyLines(input))
 	start := findStart(gr)
 	return countVisited(gr, start, 64)
 }
 
 func SolveV2(input string) int {
-	gr := utils.NonEmptyLines(input)
+	gr := grid.New(utils.NonEmptyLines(input))
 	start := findStart(gr)
 
 	steps := 26501365 // == 131 * 202300 + 65

@@ -63,12 +63,12 @@ func TestV1(t *testing.T) {
 }
 
 func TestV2(t *testing.T) {
-	gr := grid.RotateCCW(utils.NonEmptyLines(testCase1))
+	gr := grid.RotateCCW(grid.New(utils.NonEmptyLines(testCase1)))
 	for _, expected := range utils.SplitByEmptyLine(expectedAfterCycles1) {
 		gr = cycleTilts(gr)
 
 		actualGrid := grid.RotateCW(gr)
-		require.EqualValues(t, expected, actualGrid)
+		require.EqualValues(t, expected, actualGrid.Lines())
 	}
 
 	res := SolveV2(testCase1)

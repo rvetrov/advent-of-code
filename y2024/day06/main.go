@@ -58,7 +58,7 @@ func walkAndFindLoops(gr grid.Grid, pos grid.Position, dir grid.Direction, visit
 }
 
 func SolveV1(input string) int {
-	gr := grid.Grid(utils.NonEmptyLines(input))
+	gr := grid.New(utils.NonEmptyLines(input))
 	pos := gr.FindPosition('^')
 	dir := grid.Up
 	visited := map[grid.Position][]grid.Direction{}
@@ -68,7 +68,7 @@ func SolveV1(input string) int {
 }
 
 func SolveV2(input string) int {
-	//gr := grid.Grid(utils.NonEmptyLines(input))
+	//gr := grid.New(utils.NonEmptyLines(input))
 	//pos := gr.FindPosition('^')
 	//dir := grid.Up
 	//visited := map[grid.Position][]grid.Direction{}
