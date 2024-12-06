@@ -8,7 +8,8 @@ import (
 type VisitMap map[int]int
 
 func findStart(gr grid.Grid) grid.Position {
-	return gr.FindPosition('S')
+	pos, _ := gr.FindPosition('S')
+	return pos
 }
 
 func expand(gr grid.Grid, positions VisitMap) VisitMap {

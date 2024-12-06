@@ -18,9 +18,7 @@ func walk(
 	} else {
 		madeStep += 1
 	}
-	prevPos := pos
-	prevVisited := visited[pos]
-	visited[pos] = append(prevVisited, dir)
+	visited[pos] = append(visited[pos], dir)
 
 	next := pos.Add(dir)
 	if nextCh, ok := gr.At(next); !ok {
@@ -32,46 +30,42 @@ func walk(
 	}
 
 	steps, loopFound = walk(gr, pos, dir, visited)
-	visited[prevPos] = prevVisited
 	return steps + madeStep, loopFound
-}
-
-func walkAndFindLoops(gr grid.Grid, pos grid.Position, dir grid.Direction, visited map[grid.Position][]grid.Direction) int {
-	if visitedDirs, isVisited := visited[pos]; isVisited {
-		if slices.Contains(visitedDirs, dir) {
-			return 1
-		}
-	}
-	visited[pos] = append(visited[pos], dir)
-
-	next := pos.Add(dir)
-	if nextCh, ok := gr.At(next); !ok {
-		return 0
-	} else if nextCh == '#' {
-		dir = dir.TurnCW()
-	} else {
-		// TODO
-		pos = next
-	}
-
-	return walkAndFindLoops(gr, pos, dir, visited)
 }
 
 func SolveV1(input string) int {
 	gr := grid.New(utils.NonEmptyLines(input))
-	pos := gr.FindPosition('^')
+	start, _ := gr.FindPosition('^')
 	dir := grid.Up
 	visited := map[grid.Position][]grid.Direction{}
 
-	steps, _ := walk(gr, pos, dir, visited)
+	steps, _ := walk(gr, start, dir, visited)
 	return steps
 }
 
 func SolveV2(input string) int {
-	//gr := grid.New(utils.NonEmptyLines(input))
-	//pos := gr.FindPosition('^')
-	//dir := grid.Up
-	//visited := map[grid.Position][]grid.Direction{}
+	gr := grid.New(utils.NonEmptyLines(input))
+	start, _ := gr.FindPosition('^')
+	dir := grid.Up
 
-	return 6 //walkAndFindLoops(gr, pos, dir, visited)
+	defaultVisited := map[grid.Position][]grid.Direction{}
+	walk(gr, start, dir, defaultVisited)
+
+	res := 0
+	for pos := gr.Start(); gr.Contains(pos); pos = gr.Next(pos) {
+		if _, onDefaultPath := defaultVisited[pos]; !onDefaultPath {
+			continue
+		}
+		if ch, _ := gr.At(pos); ch != '.' {
+			continue
+		}
+		gr.SetAt(pos, '#')
+		visited := map[grid.Position][]grid.Direction{}
+		if _, loopFound := walk(gr, start, dir, visited); loopFound {
+			res += 1
+		}
+		gr.SetAt(pos, '.')
+	}
+
+	return res
 }

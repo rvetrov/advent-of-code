@@ -54,25 +54,44 @@ func (g Grid) At(p Position) (byte, bool) {
 	return g.g[p.Row][p.Col], true
 }
 
-func (g Grid) FindPosition(ch byte) Position {
-	n, m := g.Rows(), g.Cols()
-	for i := 0; i < n; i++ {
-		for j := 0; j < m; j++ {
+func (g Grid) SetAt(p Position, ch byte) bool {
+	if !g.Contains(p) {
+		return false
+	}
+	g.g[p.Row][p.Col] = ch
+	return true
+}
+
+func (g Grid) FindPosition(ch byte) (Position, bool) {
+	for i := 0; i < g.rows; i++ {
+		for j := 0; j < g.cols; j++ {
 			if g.g[i][j] == ch {
-				return Position{Row: i, Col: j}
+				return Position{Row: i, Col: j}, true
 			}
 		}
 	}
+	return Position{}, false
+}
+
+func (g Grid) Start() Position {
 	return Position{}
 }
 
+func (g Grid) Next(pos Position) Position {
+	pos.Col += 1
+	if pos.Col >= g.cols {
+		pos.Col = 0
+		pos.Row += 1
+	}
+	return pos
+}
+
 func (g Grid) EncodePosition(p Position) int {
-	return p.Row*g.Cols() + p.Col
+	return p.Row*g.cols + p.Col
 }
 
 func (g Grid) DecodePosition(v int) Position {
-	rowSize := g.Cols()
-	return Position{Row: v / rowSize, Col: v % rowSize}
+	return Position{Row: v / g.cols, Col: v % g.cols}
 }
 
 func Print(grid Grid) {
