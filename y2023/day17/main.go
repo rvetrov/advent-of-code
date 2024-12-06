@@ -23,7 +23,7 @@ type Crucible interface {
 type regularCrucible struct{}
 
 func (rc regularCrucible) Moves(state MoveState) []MoveState {
-	res := []MoveState{}
+	var res []MoveState
 	if state.Steps < 3 {
 		res = append(res, MoveState{
 			Pos:   state.Pos.Add(state.Dir),
@@ -48,7 +48,7 @@ func (rc regularCrucible) CanStop(_ MoveState) bool {
 type ultraCrucible struct{}
 
 func (uc ultraCrucible) Moves(state MoveState) []MoveState {
-	res := []MoveState{}
+	var res []MoveState
 	if state.Steps < 10 {
 		res = append(res, MoveState{
 			Pos:   state.Pos.Add(state.Dir),

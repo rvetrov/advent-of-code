@@ -8,23 +8,23 @@ import (
 type Grid struct {
 	rows int
 	cols int
-	g    []string
+	g    [][]byte
 }
 
 func New(lines []string) Grid {
-	return Grid{
-		rows: len(lines),
-		cols: len(lines[0]),
-		g:    lines,
+	var bs [][]byte
+	for _, line := range lines {
+		bs = append(bs, []byte(line))
 	}
+	return NewFromBytes(bs)
 }
 
 func NewFromBytes(bs [][]byte) Grid {
-	var lines []string
-	for _, line := range bs {
-		lines = append(lines, string(line))
+	return Grid{
+		rows: len(bs),
+		cols: len(bs[0]),
+		g:    bs,
 	}
-	return New(lines)
 }
 
 func (g Grid) Rows() int {
@@ -38,7 +38,7 @@ func (g Grid) Cols() int {
 func (g Grid) Lines() []string {
 	var lines []string
 	for _, bytes := range g.g {
-		lines = append(lines, bytes)
+		lines = append(lines, string(bytes))
 	}
 	return lines
 }
@@ -90,23 +90,21 @@ func buildersToLines(builders []strings.Builder) Grid {
 }
 
 func Transpose(grid Grid) Grid {
-	n, m := grid.rows, grid.cols
-	builders := make([]strings.Builder, m)
+	builders := make([]strings.Builder, grid.cols)
 
-	for i := 0; i < n; i++ {
-		for j, ch := range grid.g[i] {
-			builders[j].WriteRune(ch)
+	for _, bytes := range grid.g {
+		for j, ch := range bytes {
+			builders[j].WriteByte(ch)
 		}
 	}
 	return buildersToLines(builders)
 }
 
 func RotateCW(grid Grid) Grid {
-	n, m := grid.rows, grid.cols
-	builders := make([]strings.Builder, m)
-	for j := 0; j < m; j++ {
+	builders := make([]strings.Builder, grid.cols)
+	for j := 0; j < grid.cols; j++ {
 		builder := &builders[j]
-		for i := n - 1; i >= 0; i-- {
+		for i := grid.rows - 1; i >= 0; i-- {
 			builder.WriteByte(grid.g[i][j])
 		}
 	}
