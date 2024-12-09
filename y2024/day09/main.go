@@ -13,10 +13,6 @@ type Node struct {
 	free bool
 }
 
-func newFreeNode(len int) Node {
-	return Node{0, len, true}
-}
-
 type DiskMap []Node
 
 func (d DiskMap) line() string {
@@ -104,7 +100,7 @@ func compactV2(disk DiskMap) DiskMap {
 				if rest > 0 {
 					var tmp []Node
 					tmp = append(tmp, disk[:i+1]...)
-					tmp = append(tmp, newFreeNode(rest))
+					tmp = append(tmp, Node{0, rest, true})
 					tmp = append(tmp, disk[i+1:]...)
 					disk = tmp
 				} else {
@@ -117,13 +113,11 @@ func compactV2(disk DiskMap) DiskMap {
 		if !found {
 			right--
 		}
-
-		//fmt.Println(disk.line())
 	}
 	return disk
 }
 
-func spaceChecksum(disk DiskMap) int {
+func checksum(disk DiskMap) int {
 	ret := 0
 	i := 0
 	for _, node := range disk {
@@ -143,12 +137,12 @@ func SolveV1(input string) int {
 	line := utils.NonEmptyLines(input)[0]
 	disk := parseDiskMap(line, true)
 	disk = compactV1(disk)
-	return spaceChecksum(disk)
+	return checksum(disk)
 }
 
 func SolveV2(input string) int {
 	line := utils.NonEmptyLines(input)[0]
 	disk := parseDiskMap(line, false)
 	disk = compactV2(disk)
-	return spaceChecksum(disk)
+	return checksum(disk)
 }
