@@ -17,4 +17,4 @@ jobs:
       - run: go test ./...
 #      - run: go run ./cmd/solver/main.go 2023 all
       - run: go run ./cmd/solver/main.go 2024 all
-      - run: git status
+      - run: git diff
