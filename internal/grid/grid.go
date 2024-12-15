@@ -96,7 +96,7 @@ func (g Grid) DecodePosition(v int) Position {
 
 func Print(grid Grid) {
 	for _, line := range grid.g {
-		fmt.Println(line)
+		fmt.Println(string(line))
 	}
 }
 

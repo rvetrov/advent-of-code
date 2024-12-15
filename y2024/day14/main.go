@@ -1,9 +1,10 @@
 package day14
 
 import (
+	"fmt"
+
 	"adventofcode.com/internal/grid"
 	"adventofcode.com/internal/utils"
-	"fmt"
 )
 
 type Robot struct {
