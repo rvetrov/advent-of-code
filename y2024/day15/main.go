@@ -63,8 +63,8 @@ func makeCascadeVerticalMove(gr grid.Grid, pos grid.Position, dir grid.Direction
 		levels = append(levels, levelToMove)
 		var newLevel []grid.Position
 
-		for _, prevLevelPos := range levelToMove {
-			candPos := prevLevelPos.Add(dir)
+		for _, posToMove := range levelToMove {
+			candPos := posToMove.Add(dir)
 			candCh, _ := gr.At(candPos)
 
 			switch candCh {
