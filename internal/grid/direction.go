@@ -49,6 +49,13 @@ func (d Direction) TurnCW() Direction {
 	}
 }
 
+func (d Direction) TurnCCW() Direction {
+	return Direction{
+		DR: -d.DC,
+		DC: d.DR,
+	}
+}
+
 var (
 	Up    = Direction{-1, 0}
 	Down  = Direction{1, 0}
