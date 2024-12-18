@@ -145,7 +145,6 @@ func SolveV2(input string) int {
 	_, programStr, _ := strings.Cut(blocks[1][0], ": ")
 	program := utils.SplitNumbers(programStr, ",")
 
-	fmt.Println("Program:", program)
 	res := -1
 	for firstDigit := range 8 {
 		for secondDigit := range 8 {
@@ -153,7 +152,7 @@ func SolveV2(input string) int {
 				resDigits := dfs([]int{firstDigit, secondDigit, thirdDigit}, program, blocks[0])
 				if len(resDigits) > 0 {
 					resCand := digitsToInt(resDigits)
-					fmt.Println("Found:", resDigits, resCand)
+					//fmt.Println("Found:", resDigits, resCand)
 					if res == -1 || resCand < res {
 						res = resCand
 					}
