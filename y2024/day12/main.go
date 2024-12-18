@@ -36,7 +36,7 @@ func SolveV1(input string) int {
 	gr := grid.New(utils.NonEmptyLines(input))
 	visited := make(map[grid.Position]struct{})
 	res := 0
-	for pos := gr.Start(); gr.Contains(pos); pos = gr.Next(pos) {
+	for pos := gr.First(); gr.Contains(pos); pos = gr.Next(pos) {
 		if _, v := visited[pos]; !v {
 			area, perimeter, _ := walk(pos, gr, visited)
 			res += area * perimeter
@@ -49,7 +49,7 @@ func SolveV2(input string) int {
 	gr := grid.New(utils.NonEmptyLines(input))
 	visited := make(map[grid.Position]struct{})
 	res := 0
-	for pos := gr.Start(); gr.Contains(pos); pos = gr.Next(pos) {
+	for pos := gr.First(); gr.Contains(pos); pos = gr.Next(pos) {
 		if _, v := visited[pos]; !v {
 			area, _, sides := walk(pos, gr, visited)
 			res += area * sides

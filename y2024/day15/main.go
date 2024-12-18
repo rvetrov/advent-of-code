@@ -95,7 +95,7 @@ func makeCascadeVerticalMove(gr grid.Grid, pos grid.Position, dir grid.Direction
 
 func sumOfBoxesCoordinates(gr grid.Grid) int {
 	res := 0
-	for pos := gr.Start(); gr.Contains(pos); pos = gr.Next(pos) {
+	for pos := gr.First(); gr.Contains(pos); pos = gr.Next(pos) {
 		ch, _ := gr.At(pos)
 		if ch == boxChar || ch == boxLeftChar {
 			res += pos.Row*100 + pos.Col

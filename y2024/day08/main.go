@@ -8,7 +8,7 @@ import (
 func parseAntennas(input string) (grid.Grid, map[byte][]grid.Position) {
 	gr := grid.New(utils.NonEmptyLines(input))
 	antennas := make(map[byte][]grid.Position)
-	for pos := gr.Start(); gr.Contains(pos); pos = gr.Next(pos) {
+	for pos := gr.First(); gr.Contains(pos); pos = gr.Next(pos) {
 		ch, _ := gr.At(pos)
 		if ch != '.' {
 			antennas[ch] = append(antennas[ch], pos)

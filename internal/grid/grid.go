@@ -73,8 +73,12 @@ func (g Grid) FindPosition(ch byte) (Position, bool) {
 	return Position{}, false
 }
 
-func (g Grid) Start() Position {
+func (g Grid) First() Position {
 	return Position{}
+}
+
+func (g Grid) Last() Position {
+	return Position{Row: g.rows - 1, Col: g.cols - 1}
 }
 
 func (g Grid) Next(pos Position) Position {

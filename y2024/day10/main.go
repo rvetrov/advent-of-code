@@ -44,7 +44,7 @@ func SolveV1(input string) int {
 	}
 
 	res := 0
-	for pos := gr.Start(); gr.Contains(pos); pos = gr.Next(pos) {
+	for pos := gr.First(); gr.Contains(pos); pos = gr.Next(pos) {
 		if ch, _ := gr.At(pos); ch == '0' {
 			mark := gr.EncodePosition(pos) + 1
 			res += trailheadsV1(gr, pos, mark, visited)
@@ -57,7 +57,7 @@ func SolveV1(input string) int {
 func SolveV2(input string) int {
 	gr := grid.New(utils.NonEmptyLines(input))
 	res := 0
-	for pos := gr.Start(); gr.Contains(pos); pos = gr.Next(pos) {
+	for pos := gr.First(); gr.Contains(pos); pos = gr.Next(pos) {
 		if ch, _ := gr.At(pos); ch == '0' {
 			res += trailheadsV2(gr, pos)
 		}

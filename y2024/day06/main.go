@@ -1,9 +1,10 @@
 package day06
 
 import (
+	"slices"
+
 	"adventofcode.com/internal/grid"
 	"adventofcode.com/internal/utils"
-	"slices"
 )
 
 func walk(
@@ -52,7 +53,7 @@ func SolveV2(input string) int {
 	walk(gr, start, dir, defaultVisited)
 
 	res := 0
-	for pos := gr.Start(); gr.Contains(pos); pos = gr.Next(pos) {
+	for pos := gr.First(); gr.Contains(pos); pos = gr.Next(pos) {
 		if _, onDefaultPath := defaultVisited[pos]; !onDefaultPath {
 			continue
 		}
