@@ -45,8 +45,7 @@ func TestSolveV1(t *testing.T) {
 }
 
 func TestSolveV2(t *testing.T) {
-	gr := makeGrid(7, 7)
 	corruptedBytes := utils.NonEmptyLines(testCase1)
-	res := solveV2(gr, corruptedBytes)
+	res := solveV2(7, 7, corruptedBytes)
 	require.Equal(t, "6,1", res)
 }

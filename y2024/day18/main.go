@@ -57,17 +57,19 @@ func SolveV1(input string) int {
 	return solveV1(gr, corruptedBytes[:1024])
 }
 
-func solveV2(gr grid.Grid, corruptedBytes []string) string {
-	for i := 0; i < len(corruptedBytes); i++ {
-		if solveV1(gr, corruptedBytes[i:i+1]) == 0 {
-			return corruptedBytes[i]
-		}
-	}
-	return ""
+func solveV2(rows, cols int, corruptedBytes []string) string {
+	i := utils.LowerBound(
+		0,
+		len(corruptedBytes),
+		func(n int) bool {
+			gr := makeGrid(rows, cols)
+			return solveV1(gr, corruptedBytes[:n+1]) == 0
+		},
+	)
+	return corruptedBytes[i]
 }
 
 func SolveV2(input string) string {
-	gr := makeGrid(71, 71)
 	corruptedBytes := utils.NonEmptyLines(input)
-	return solveV2(gr, corruptedBytes)
+	return solveV2(71, 71, corruptedBytes)
 }
