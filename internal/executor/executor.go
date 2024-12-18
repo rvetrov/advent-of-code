@@ -7,7 +7,6 @@ import (
 	"os"
 	"path"
 	"sort"
-	"strconv"
 	"time"
 
 	"adventofcode.com/internal/utils"
@@ -54,11 +53,21 @@ func (e *Executor) solveTask(taskName string, t Task) error {
 			resultPath := path.Join(e.path, taskName, fmt.Sprintf("output.v%d", i+1))
 
 			started := time.Now()
-			result := solver(input)
+
+			var resultStr string
+			switch solver.(type) {
+			case func(string) int:
+				result := solver.(func(string) int)(input)
+				resultStr = fmt.Sprint(result)
+			case func(string) string:
+				resultStr = solver.(func(string) string)(input)
+			default:
+				panic(fmt.Sprintf("Unknown solver type: %T", solver))
+			}
 			ms := int(time.Since(started).Milliseconds())
 			fmt.Printf("%s: %v -> %v, %d.%03ds\n", taskName, inputPath, resultPath, ms/1000, ms%1000)
 
-			if err = os.WriteFile(resultPath, []byte(strconv.Itoa(result)), 0644); err != nil {
+			if err = os.WriteFile(resultPath, []byte(resultStr), 0644); err != nil {
 				return err
 			}
 		}

@@ -1,6 +1,6 @@
 package executor
 
-type taskSolver func(string) int
+type taskSolver any
 
 type Task struct {
 	solvers []taskSolver

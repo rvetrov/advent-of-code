@@ -25,14 +25,18 @@ func NonEmptyLines(input string) []string {
 	return res
 }
 
-func ReadNumbers(line string) []int {
+func SplitNumbers(line, sep string) []int {
 	var res []int
-	for _, numStr := range strings.Split(line, " ") {
+	for _, numStr := range strings.Split(line, sep) {
 		if num, err := strconv.Atoi(numStr); err == nil {
 			res = append(res, num)
 		}
 	}
 	return res
+}
+
+func ReadNumbers(line string) []int {
+	return SplitNumbers(line, " ")
 }
 
 func SplitByEmptyLine(input string) [][]string {

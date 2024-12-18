@@ -1,9 +1,10 @@
 package day16
 
 import (
+	"container/heap"
+
 	"adventofcode.com/internal/grid"
 	"adventofcode.com/internal/utils"
-	"container/heap"
 )
 
 type ReindeerPosition struct {
