@@ -2,18 +2,21 @@ package day20
 
 import (
 	"adventofcode.com/internal/grid"
+	"adventofcode.com/internal/math"
 	"adventofcode.com/internal/utils"
 )
 
 const (
-	wallChar = '#'
+	startChar = 'S'
+	wallChar  = '#'
 )
 
-func distsOnRoute(gr grid.Grid, start grid.Position) map[grid.Position]int {
-	dists := make(map[grid.Position]int)
+func distsOnRoute(gr grid.Grid) map[grid.Position]int {
+	start, _ := gr.FindPosition(startChar)
 
-	q := []grid.Position{start}
+	dists := make(map[grid.Position]int)
 	dists[start] = 0
+	q := []grid.Position{start}
 
 	for len(q) > 0 {
 		pos := q[0]
@@ -35,58 +38,36 @@ func distsOnRoute(gr grid.Grid, start grid.Position) map[grid.Position]int {
 	return dists
 }
 
-func cheatRoutes(gr grid.Grid, dists map[grid.Position]int, start grid.Position, steps int, threshold int) int {
-	visited := make(map[grid.Position]struct{})
-	visited[start] = struct{}{}
-
+func cheatRoutes(gr grid.Grid, dists map[grid.Position]int, start grid.Position, maxSteps int, minSave int) int {
 	cheatStartDist := dists[start]
-	cheatEnds := make(map[grid.Position]int)
-
-	wave := []grid.Position{start}
-	for step := range steps {
-		var newWave []grid.Position
-
-		for _, pos := range wave {
-			for _, dir := range grid.FourSides {
-				nextPos := pos.Add(dir)
-				if _, inside := gr.At(nextPos); !inside {
-					continue
-				}
-				if _, v := visited[nextPos]; v {
-					continue
-				}
-				visited[nextPos] = struct{}{}
-
-				if cheatEndDist, onRoute := dists[nextPos]; onRoute {
-					saved := cheatEndDist - cheatStartDist - (step + 1)
-					if saved > 0 {
-						cheatEnds[nextPos] = saved
-					}
-				}
-				newWave = append(newWave, nextPos)
-			}
-		}
-
-		wave = newWave
-	}
-
 	res := 0
-	for _, saved := range cheatEnds {
-		if saved >= threshold {
-			res++
+	for dRow := -maxSteps; dRow <= maxSteps; dRow++ {
+		maxColSteps := maxSteps - math.AbsInt(dRow)
+		for dCol := -maxColSteps; dCol <= maxColSteps; dCol++ {
+			pos := start.Add(grid.Direction{DR: dRow, DC: dCol})
+			if _, inside := gr.At(pos); !inside {
+				continue
+			}
+
+			if cheatEndDist, onRoute := dists[pos]; onRoute {
+				steps := math.AbsInt(dRow) + math.AbsInt(dCol)
+				saved := cheatEndDist - cheatStartDist - steps
+				if saved >= minSave {
+					res++
+				}
+			}
 		}
 	}
 	return res
 }
 
-func solve(input string, threshold int, cheatSteps int) int {
+func solve(input string, minSave int, maxSteps int) int {
 	gr := grid.New(utils.NonEmptyLines(input))
-	start, _ := gr.FindPosition('S')
-	dists := distsOnRoute(gr, start)
+	dists := distsOnRoute(gr)
 
 	res := 0
 	for cheatStart := range dists {
-		res += cheatRoutes(gr, dists, cheatStart, cheatSteps, threshold)
+		res += cheatRoutes(gr, dists, cheatStart, maxSteps, minSave)
 	}
 	return res
 }
