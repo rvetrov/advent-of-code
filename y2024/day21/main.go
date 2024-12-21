@@ -1,6 +1,9 @@
 package day21
 
 import (
+	"strconv"
+	"strings"
+
 	"adventofcode.com/internal/grid"
 	"adventofcode.com/internal/utils"
 )
@@ -121,20 +124,17 @@ func calcArrowCosts(chainLength int) MoveCosts {
 
 func solve(input string, chainLength int) int {
 	arrowCosts := calcArrowCosts(chainLength)
-	numsConst := calcAllMoveCosts(numsGrid, arrowCosts)
+	numsCosts := calcAllMoveCosts(numsGrid, arrowCosts)
+
 	complexity := 0
 	for _, line := range utils.NonEmptyLines(input) {
-		var (
-			prevCh byte = 'A'
-			num    int
-		)
+		var prevCh byte = 'A'
 
+		numStr, _ := strings.CutSuffix(line, "A")
+		num, _ := strconv.Atoi(numStr)
 		cost := 0
 		for _, ch := range []byte(line) {
-			if ch != 'A' {
-				num = num*10 + int(ch-'0')
-			}
-			cost += numsConst[Move{from: prevCh, to: ch}]
+			cost += numsCosts[Move{from: prevCh, to: ch}]
 			prevCh = ch
 		}
 
