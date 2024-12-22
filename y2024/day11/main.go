@@ -9,7 +9,7 @@ import (
 
 func readStones(input string) map[int]int {
 	res := make(map[int]int)
-	for _, stone := range utils.ReadNumbers(utils.NonEmptyLines(input)[0]) {
+	for _, stone := range utils.SpaceSeparatedIntegers(utils.NonEmptyLines(input)[0]) {
 		res[stone]++
 	}
 	return res

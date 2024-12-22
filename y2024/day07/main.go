@@ -10,7 +10,7 @@ import (
 func parseEquation(line string) (int, []int) {
 	parts := strings.Split(line, ":")
 	result, _ := strconv.Atoi(parts[0])
-	return result, utils.ReadNumbers(parts[1])
+	return result, utils.SpaceSeparatedIntegers(parts[1])
 }
 
 func canBeProducedByTwoOps(result int, nums []int) bool {

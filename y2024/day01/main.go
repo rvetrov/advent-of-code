@@ -1,14 +1,15 @@
 package day01
 
 import (
+	"sort"
+
 	"adventofcode.com/internal/math"
 	"adventofcode.com/internal/utils"
-	"sort"
 )
 
 func readLists(input string) (l1, l2 []int) {
 	for _, line := range utils.NonEmptyLines(input) {
-		nums := utils.ReadNumbers(line)
+		nums := utils.SpaceSeparatedIntegers(line)
 		l1 = append(l1, nums[0])
 		l2 = append(l2, nums[1])
 	}

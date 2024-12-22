@@ -64,7 +64,7 @@ func TestV1(t *testing.T) {
 
 func TestV2(t *testing.T) {
 	gr := grid.RotateCCW(grid.New(utils.NonEmptyLines(testCase1)))
-	for _, expected := range utils.SplitByEmptyLine(expectedAfterCycles1) {
+	for _, expected := range utils.EmptyLineSeparatedBlocks(expectedAfterCycles1) {
 		gr = cycleTilts(gr)
 
 		actualGrid := grid.RotateCW(gr)

@@ -1,7 +1,10 @@
 package day22
 
 import (
+	"slices"
 	"strconv"
+
+	"golang.org/x/exp/maps"
 
 	"adventofcode.com/internal/utils"
 )
@@ -60,11 +63,5 @@ func SolveV2(input string) int {
 		updateChangeGains(num, 2000, changeGains)
 	}
 
-	res := 0
-	for _, gain := range changeGains {
-		if res < gain {
-			res = gain
-		}
-	}
-	return res
+	return slices.Max(maps.Values(changeGains))
 }

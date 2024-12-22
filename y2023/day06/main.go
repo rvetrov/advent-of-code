@@ -13,13 +13,13 @@ func parseState(input string, join bool) ([]int, []int) {
 	if join {
 		line = strings.ReplaceAll(line, " ", "")
 	}
-	times := utils.ReadNumbers(line)
+	times := utils.SpaceSeparatedIntegers(line)
 
 	_, line, _ = strings.Cut(lines[1], ":")
 	if join {
 		line = strings.ReplaceAll(line, " ", "")
 	}
-	distances := utils.ReadNumbers(line)
+	distances := utils.SpaceSeparatedIntegers(line)
 
 	return times, distances
 }

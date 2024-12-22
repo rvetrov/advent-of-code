@@ -184,7 +184,7 @@ func (wfs Workflows) LookupRange(wf string, ruleInd int, pr PartRange) int {
 }
 
 func SolveV1(input string) int {
-	blocks := utils.SplitByEmptyLine(input)
+	blocks := utils.EmptyLineSeparatedBlocks(input)
 	wfs := NewWorkflows(blocks[0])
 
 	res := 0
@@ -198,7 +198,7 @@ func SolveV1(input string) int {
 }
 
 func SolveV2(input string) int {
-	blocks := utils.SplitByEmptyLine(input)
+	blocks := utils.EmptyLineSeparatedBlocks(input)
 	wfs := NewWorkflows(blocks[0])
 
 	start := PartRange{

@@ -85,7 +85,7 @@ func solve(a, b, target grid.Direction) int {
 
 func SolveV1(input string) int {
 	res := 0
-	for _, block := range utils.SplitByEmptyLine(input) {
+	for _, block := range utils.EmptyLineSeparatedBlocks(input) {
 		a, b, target := parseInput(block)
 		res += bruteForceSolve(a, b, target)
 	}
@@ -94,7 +94,7 @@ func SolveV1(input string) int {
 
 func SolveV2(input string) int {
 	res := 0
-	for _, block := range utils.SplitByEmptyLine(input) {
+	for _, block := range utils.EmptyLineSeparatedBlocks(input) {
 		a, b, target := parseInput(block)
 		target.DC += 10000000000000
 		target.DR += 10000000000000

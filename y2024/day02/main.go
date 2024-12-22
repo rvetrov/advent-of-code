@@ -52,7 +52,7 @@ func isSafeReport(nums []int, allowBadLevel bool) bool {
 func SolveV1(input string) int {
 	res := 0
 	for _, line := range utils.NonEmptyLines(input) {
-		nums := utils.ReadNumbers(line)
+		nums := utils.SpaceSeparatedIntegers(line)
 		if isSafeReport(nums, false) {
 			res += 1
 		}
@@ -63,7 +63,7 @@ func SolveV1(input string) int {
 func SolveV2(input string) int {
 	res := 0
 	for _, line := range utils.NonEmptyLines(input) {
-		nums := utils.ReadNumbers(line)
+		nums := utils.SpaceSeparatedIntegers(line)
 		if isSafeReport(nums, true) {
 			res += 1
 		}

@@ -35,11 +35,11 @@ func SplitNumbers(line, sep string) []int {
 	return res
 }
 
-func ReadNumbers(line string) []int {
+func SpaceSeparatedIntegers(line string) []int {
 	return SplitNumbers(line, " ")
 }
 
-func SplitByEmptyLine(input string) [][]string {
+func EmptyLineSeparatedBlocks(input string) [][]string {
 	var res [][]string
 
 	var textBlock []string

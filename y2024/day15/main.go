@@ -126,7 +126,7 @@ func widenMap(lines []string) []string {
 }
 
 func SolveV1(input string) int {
-	blocks := utils.SplitByEmptyLine(input)
+	blocks := utils.EmptyLineSeparatedBlocks(input)
 	gr := grid.New(blocks[0])
 	robotPos, _ := gr.FindPosition(robotChar)
 
@@ -140,7 +140,7 @@ func SolveV1(input string) int {
 }
 
 func SolveV2(input string) int {
-	blocks := utils.SplitByEmptyLine(input)
+	blocks := utils.EmptyLineSeparatedBlocks(input)
 	gr := grid.New(widenMap(blocks[0]))
 	robotPos, _ := gr.FindPosition(robotChar)
 

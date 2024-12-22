@@ -23,7 +23,7 @@ func possibleDesigns(design string, towels []string) int {
 }
 
 func SolveV1(input string) int {
-	blocks := utils.SplitByEmptyLine(input)
+	blocks := utils.EmptyLineSeparatedBlocks(input)
 	towels := strings.Split(blocks[0][0], ", ")
 
 	res := 0
@@ -36,7 +36,7 @@ func SolveV1(input string) int {
 }
 
 func SolveV2(input string) int {
-	blocks := utils.SplitByEmptyLine(input)
+	blocks := utils.EmptyLineSeparatedBlocks(input)
 	towels := strings.Split(blocks[0][0], ", ")
 
 	res := 0

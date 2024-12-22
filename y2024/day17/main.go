@@ -89,7 +89,7 @@ func NewComputer(lines []string) *Computer {
 }
 
 func SolveV1(input string) string {
-	blocks := utils.SplitByEmptyLine(input)
+	blocks := utils.EmptyLineSeparatedBlocks(input)
 	comp := NewComputer(blocks[0])
 	_, programStr, _ := strings.Cut(blocks[1][0], ": ")
 	program := utils.SplitNumbers(programStr, ",")
@@ -141,7 +141,7 @@ func dfs(digits []int, program []int, compInitLines []string) []int {
 }
 
 func SolveV2(input string) int {
-	blocks := utils.SplitByEmptyLine(input)
+	blocks := utils.EmptyLineSeparatedBlocks(input)
 	_, programStr, _ := strings.Cut(blocks[1][0], ": ")
 	program := utils.SplitNumbers(programStr, ",")
 

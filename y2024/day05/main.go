@@ -66,7 +66,7 @@ func parseUpdates(lines []string) [][]string {
 }
 
 func SolveV1(input string) int {
-	blocks := utils.SplitByEmptyLine(input)
+	blocks := utils.EmptyLineSeparatedBlocks(input)
 	rules := parseOrderRules(blocks[0])
 
 	res := 0
@@ -80,7 +80,7 @@ func SolveV1(input string) int {
 }
 
 func SolveV2(input string) int {
-	blocks := utils.SplitByEmptyLine(input)
+	blocks := utils.EmptyLineSeparatedBlocks(input)
 	rules := parseOrderRules(blocks[0])
 
 	res := 0

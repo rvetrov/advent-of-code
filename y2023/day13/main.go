@@ -49,7 +49,7 @@ func encodeReflections(rows, cols, rowExcludes, colExcludes []int) int {
 }
 
 func SolveV1(input string) int {
-	grids := utils.SplitByEmptyLine(input)
+	grids := utils.EmptyLineSeparatedBlocks(input)
 	res := 0
 	for _, lines := range grids {
 		gr := grid.New(lines)
@@ -90,7 +90,7 @@ func alternativeReflection(gr grid.Grid, origRows, origCols []int) ([]int, []int
 }
 
 func SolveV2(input string) int {
-	grids := utils.SplitByEmptyLine(input)
+	grids := utils.EmptyLineSeparatedBlocks(input)
 	res := 0
 	for _, lines := range grids {
 		gr := grid.New(lines)
