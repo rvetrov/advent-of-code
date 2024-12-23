@@ -49,13 +49,13 @@ func SolveV1(input string) int {
 	n := parseNetwork(utils.NonEmptyLines(input))
 
 	res := 0
-	for i, name1 := range n.nodes {
-		for j, name2 := range n.nodes[:i] {
-			if !n.links[i][j] {
+	for i1, name1 := range n.nodes {
+		for i2, name2 := range n.nodes[:i1] {
+			if !n.links[i1][i2] {
 				continue
 			}
-			for k, name3 := range n.nodes[:j] {
-				if n.links[k][i] && n.links[k][j] && (name1[0] == 't' || name2[0] == 't' || name3[0] == 't') {
+			for i3, name3 := range n.nodes[:i2] {
+				if n.links[i3][i1] && n.links[i3][i2] && (name1[0] == 't' || name2[0] == 't' || name3[0] == 't') {
 					res++
 				}
 			}
