@@ -4,7 +4,6 @@ import (
 	"slices"
 	"strings"
 
-	"adventofcode.com/internal/math"
 	"adventofcode.com/internal/utils"
 )
 
@@ -12,6 +11,7 @@ type Brick struct {
 	x1, y1, z1  int
 	x2, y2, z2  int
 	disappeared bool
+	legs        []int
 }
 
 func parseBrick(line string) *Brick {
@@ -38,7 +38,7 @@ func parseBrick(line string) *Brick {
 	}
 }
 
-func parseBricks(input string) []*Brick {
+func parseAndSortBricks(input string) []*Brick {
 	var res []*Brick
 	for _, line := range utils.NonEmptyLines(input) {
 		res = append(res, parseBrick(line))
@@ -48,62 +48,59 @@ func parseBricks(input string) []*Brick {
 }
 
 func sortBricks(bricks []*Brick) {
-	slices.SortFunc(bricks, func(b1, b2 *Brick) int {
-		if b1.z1 < b2.z1 {
+	slices.SortFunc(bricks, func(a, b *Brick) int {
+		if a.z1 < b.z1 {
 			return -1
-		} else if b1.z1 > b2.z1 {
+		} else if a.z1 > b.z1 {
 			return 1
 		}
 		return 0
 	})
-
 }
 
-func findFallHeight(a *Brick, bricks []*Brick) int {
+func findFallHeight(a *Brick, bricks []*Brick) (int, []int) {
 	var maxZ = 1
-	for _, b := range bricks {
+	var legs []int
+	for bi, b := range bricks {
 		if b.disappeared {
 			continue
 		}
-		x1 := math.MaxInt(a.x1, b.x1)
-		x2 := math.MinInt(a.x2, b.x2)
-		if x1 > x2 {
+		if a.x2 < b.x1 || b.x2 < a.x1 || a.y2 < b.y1 || b.y2 < a.y1 {
 			continue
 		}
 
-		y1 := math.MaxInt(a.y1, b.y1)
-		y2 := math.MinInt(a.y2, b.y2)
-		if y1 > y2 {
-			continue
-		}
-
-		if maxZ <= b.z2 {
+		if maxZ == b.z2+1 {
+			legs = append(legs, bi)
+		} else if maxZ < b.z2+1 {
 			maxZ = b.z2 + 1
+			legs = []int{bi}
 		}
 	}
-	return maxZ - a.z1
+	return maxZ - a.z1, legs
 }
 
 func stabilizeBricks(bricks []*Brick) {
 	for i, brick := range bricks {
-		dz := findFallHeight(brick, bricks[:i])
+		dz, _ := findFallHeight(brick, bricks[:i])
 		brick.z1 += dz
 		brick.z2 += dz
 	}
 	sortBricks(bricks)
-
+	for i, brick := range bricks {
+		_, legs := findFallHeight(brick, bricks[:i])
+		brick.legs = legs
+	}
 }
 
 func SolveV1(input string) int {
-	bricks := parseBricks(input)
+	bricks := parseAndSortBricks(input)
 	stabilizeBricks(bricks)
 
 	res := 0
 	for i := range bricks {
-		bricks[i].disappeared = true
 		safe := true
 		for j := i + 1; j < len(bricks); j++ {
-			if dz := findFallHeight(bricks[j], bricks[:j]); dz != 0 {
+			if len(bricks[j].legs) == 1 && bricks[j].legs[0] == i {
 				safe = false
 				break
 			}
@@ -117,7 +114,7 @@ func SolveV1(input string) int {
 }
 
 func SolveV2(input string) int {
-	bricks := parseBricks(input)
+	bricks := parseAndSortBricks(input)
 	stabilizeBricks(bricks)
 
 	res := 0
@@ -125,8 +122,14 @@ func SolveV2(input string) int {
 		bricks[i].disappeared = true
 		disappeared := []int{i}
 		for j := i + 1; j < len(bricks); j++ {
-			bs := slices.Clone(bricks[:i])
-			if dz := findFallHeight(bricks[j], append(bs, bricks[:j]...)); dz != 0 {
+			var legsDisappeared = len(bricks[j].legs) > 0
+			for _, leg := range bricks[j].legs {
+				if !bricks[leg].disappeared {
+					legsDisappeared = false
+					break
+				}
+			}
+			if legsDisappeared {
 				res++
 				bricks[j].disappeared = true
 				disappeared = append(disappeared, j)
