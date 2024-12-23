@@ -21,6 +21,7 @@ import (
 	"adventofcode.com/y2023/day19"
 	"adventofcode.com/y2023/day20"
 	"adventofcode.com/y2023/day21"
+	"adventofcode.com/y2023/day23"
 )
 
 var Y2023 = &Executor{
@@ -47,5 +48,6 @@ var Y2023 = &Executor{
 		"day19": {[]taskSolver{day19.SolveV1, day19.SolveV2}},
 		"day20": {[]taskSolver{day20.SolveV1, day20.SolveV2}},
 		"day21": {[]taskSolver{day21.SolveV1, day21.SolveV2}},
+		"day23": {[]taskSolver{day23.SolveV1, day23.SolveV2}},
 	},
 }
