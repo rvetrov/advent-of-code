@@ -3,11 +3,12 @@ package executor
 import (
 	"errors"
 	"fmt"
-	"golang.org/x/exp/maps"
 	"os"
 	"path"
 	"sort"
 	"time"
+
+	"golang.org/x/exp/maps"
 
 	"adventofcode.com/internal/utils"
 )
@@ -58,6 +59,9 @@ func (e *Executor) solveTask(taskName string, t Task) error {
 			switch solver.(type) {
 			case func(string) int:
 				result := solver.(func(string) int)(input)
+				resultStr = fmt.Sprint(result)
+			case func(string) int64:
+				result := solver.(func(string) int64)(input)
 				resultStr = fmt.Sprint(result)
 			case func(string) string:
 				resultStr = solver.(func(string) string)(input)
