@@ -95,10 +95,10 @@ x05 AND y05 -> z00
 )
 
 func TestSolveV1(t *testing.T) {
-	//res := SolveV1(testCase0)
-	//require.Equal(t, 4, res)
-	//res = SolveV1(testCase1)
-	//require.Equal(t, 2024, res)
+	res := SolveV1(testCase0)
+	require.Equal(t, 4, res)
+	res = SolveV1(testCase1)
+	require.Equal(t, 2024, res)
 }
 
 func TestSolveV2(t *testing.T) {

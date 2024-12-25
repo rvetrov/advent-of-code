@@ -2,7 +2,6 @@ package day24
 
 import (
 	"fmt"
-	"math/big"
 	"strconv"
 	"strings"
 
@@ -12,7 +11,6 @@ import (
 type Gate struct {
 	in1, in2, out int
 	op            string
-	outStr        string
 }
 
 func (g Gate) produce(v1, v2 int) int {
@@ -28,56 +26,101 @@ func (g Gate) produce(v1, v2 int) int {
 	}
 }
 
-func extractBit(name string) int {
-	bit, _ := strconv.Atoi(name[1:])
-	return bit
-}
+type InputState map[int]int
 
 type Device struct {
-	gates     []Gate
-	wireToInd map[string]int
-	wireCount int
+	gates         []Gate
+	wireNameToInd map[string]int
+	wireNames     []string
+	wireGates     [][]int
 }
 
 func parseDevice(lines []string) *Device {
-	device := &Device{
-		wireToInd: make(map[string]int),
+	d := &Device{
+		wireNameToInd: make(map[string]int),
 	}
 	for _, line := range lines {
 		g := Gate{}
 		parts := strings.Split(line, " ")
-		g.in1 = device.WireInd(parts[0])
+		g.in1 = d.WireInd(parts[0])
 		g.op = parts[1]
-		g.in2 = device.WireInd(parts[2])
-		g.out = device.WireInd(parts[4])
-		g.outStr = parts[4]
-		device.gates = append(device.gates, g)
+		g.in2 = d.WireInd(parts[2])
+		g.out = d.WireInd(parts[4])
+
+		gateInd := len(d.gates)
+		d.wireGates[g.in1] = append(d.wireGates[g.in1], gateInd)
+		d.wireGates[g.in2] = append(d.wireGates[g.in2], gateInd)
+		d.gates = append(d.gates, g)
 	}
-	return device
+	return d
 }
 
-func (d *Device) Produce(state *big.Int) int64 {
-	//gates := d.gates
-	//for len(gates) > 0 {
-	//	var notProduced []Gate
-	//	for _, gate := range gates {
-	//		value1, produced1 := state[gate.in1]
-	//		value2, produced2 := state[gate.in2]
-	//		if !produced1 || !produced2 {
-	//			notProduced = append(notProduced, gate)
-	//			continue
-	//		}
-	//		state[gate.out] = gate.produce(value1, value2)
-	//	}
-	//	gates = notProduced
-	//}
+func (d *Device) WireInd(wire string) int {
+	if ind, ok := d.wireNameToInd[wire]; ok {
+		return ind
+	}
+	ind := len(d.wireGates)
+	d.wireNameToInd[wire] = ind
+	d.wireGates = append(d.wireGates, nil)
+	d.wireNames = append(d.wireNames, wire)
+	return ind
+}
 
-	var res int64
-	//for name, value := range state {
-	//	if name[0] == 'z' && value > 0 {
-	//		res |= 1 << extractBit(name)
-	//	}
-	//}
+func (d *Device) ParseInput(lines []string) InputState {
+	var (
+		wire  string
+		value int
+		res   = make(InputState)
+	)
+	for _, line := range lines {
+		_, _ = fmt.Sscanf(line, "%s %d", &wire, &value)
+		res[d.WireInd(wire[:len(wire)-1])] = value
+	}
+	return res
+}
+
+func (d *Device) Produce(state InputState) int {
+	//big.NewInt(0)
+	//res.SetBit(res, d.WireInd(wire), value)
+
+	var ready []int
+	for i, gate := range d.gates {
+		_, produced1 := state[gate.in1]
+		_, produced2 := state[gate.in2]
+		if produced1 && produced2 {
+			ready = append(ready, i)
+		}
+	}
+
+	handled := 0
+	for len(ready) > 0 {
+		gate := d.gates[ready[0]]
+		ready = ready[1:]
+		handled++
+
+		value1, _ := state[gate.in1]
+		value2, _ := state[gate.in2]
+		state[gate.out] = gate.produce(value1, value2)
+
+		for _, blocked := range d.wireGates[gate.out] {
+			_, produced1 := state[d.gates[blocked].in1]
+			_, produced2 := state[d.gates[blocked].in2]
+			if produced1 && produced2 {
+				ready = append(ready, blocked)
+			}
+		}
+	}
+	if handled != len(d.gates) {
+		panic("not all gates handled")
+	}
+
+	var res int
+	for wireInd, value := range state {
+		if d.wireNames[wireInd][0] == 'z' && value > 0 {
+			bit, _ := strconv.Atoi(d.wireNames[wireInd][1:])
+			res |= 1 << bit
+		}
+	}
 	return res
 }
 
@@ -89,7 +132,7 @@ func (d *Device) dfs(curGate int, deps []map[string]struct{}) map[string]struct{
 	deps[curGate] = curDeps
 
 	//for _, input := range []string{d.gates[curGate].in1, d.gates[curGate].in2} {
-	//	if ind, ok := d.wireToInd[input]; ok {
+	//	if ind, ok := d.wireNameToInd[input]; ok {
 	//		inputDeps := d.dfs(ind, deps)
 	//		for in := range inputDeps {
 	//			curDeps[in] = struct{}{}
@@ -114,29 +157,6 @@ func (d *Device) analyze() {
 	}
 }
 
-func (d *Device) WireInd(wire string) int {
-	if ind, ok := d.wireToInd[wire]; ok {
-		return ind
-	}
-	d.wireToInd[wire] = d.wireCount
-	d.wireCount++
-	return d.wireCount - 1
-}
-
-func (d *Device) ParseInput(lines []string) *big.Int {
-	var (
-		wire  string
-		value uint
-		res   = big.NewInt(0)
-	)
-	for _, line := range lines {
-		_, _ = fmt.Sscanf(line[1:], "%s %d", &wire, &value)
-		wire = wire[:len(wire)-1]
-		res.SetBit(res, d.WireInd(wire), value)
-	}
-	return res
-}
-
 func adjustDevice(d *Device, swaps int, correctProducer func(int, int) int) string {
 	d.analyze()
 
@@ -150,7 +170,7 @@ func adjustDevice(d *Device, swaps int, correctProducer func(int, int) int) stri
 	return ""
 }
 
-func SolveV1(input string) int64 {
+func SolveV1(input string) int {
 	blocks := utils.EmptyLineSeparatedBlocks(input)
 	device := parseDevice(blocks[1])
 	state := device.ParseInput(blocks[0])
