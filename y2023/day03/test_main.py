@@ -12,6 +12,7 @@ TEST_CASE_1 = """467..114..
 .664.598..
 """
 
+
 def test_solve_v1():
     res = main.solve_v1(TEST_CASE_1.split())
     assert res == 4361

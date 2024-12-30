@@ -1,3 +1,5 @@
+from internal.py import task
+
 
 def nearby_symbols(lines: list[str], ii: int, jj: int) -> dict[str, set[tuple[int, int]]]:
     symbols = {}
@@ -61,15 +63,10 @@ def solve_v2(lines: list[str]) -> int:
             res += numbers[0] * numbers[1]
     return res
 
-def main():
-    with open("y2023/day03/input.big", "rt") as input_file:
-        lines = input_file.readlines()
 
-    res = solve_v2(lines)
-
-    with open("y2023/day03/output.v2", "wt") as output_file:
-        print(res, file=output_file)
+def solver(dir_path: str):
+    task.solve(dir_path, solver_v1=solve_v1, solver_v2=solve_v2)
 
 
 if __name__ == "__main__":
-    main()
+    solver("y2023/day03")
