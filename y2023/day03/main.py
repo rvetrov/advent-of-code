@@ -1,4 +1,4 @@
-from internal.py import task
+from internal.py import task, task_io
 
 
 def nearby_symbols(lines: list[str], ii: int, jj: int) -> dict[str, set[tuple[int, int]]]:
@@ -16,9 +16,9 @@ def nearby_symbols(lines: list[str], ii: int, jj: int) -> dict[str, set[tuple[in
     return symbols
 
 
-def solve_v1(lines: list[str]) -> int:
+def solve_v1(data: str) -> int:
+    lines = task_io.non_empty_lines(data)
     res = 0
-    lines = [_.strip() for _ in lines if _]
     for i, line in enumerate(lines):
         is_engine_part = False
         number = 0
@@ -38,8 +38,8 @@ def solve_v1(lines: list[str]) -> int:
     return res
 
 
-def solve_v2(lines: list[str]) -> int:
-    lines = [_.strip() for _ in lines if _]
+def solve_v2(data: str) -> int:
+    lines = task_io.non_empty_lines(data)
     gears = {}
     for i, line in enumerate(lines):
         number = 0
