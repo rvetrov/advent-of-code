@@ -1,0 +1,23 @@
+name: Checks of Python code
+
+on:
+  push:
+    paths:
+      - '**.py'
+      - 'requirements.txt'
+
+jobs:
+
+  test-py-advent-of-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip' # caching pip dependencies
+      - run: pip install -r requirements.txt
+      - run: .venv/bin/pytest .
+      - run: git diff

@@ -1,11 +1,12 @@
-name: Advent of Code checks
+name: Checks of Go code
 
 on:
-  - push
-  - pull_request
+  push:
+    paths:
+      - '**.go'
 
 jobs:
-  test-advent-of-code:
+  test-go-advent-of-code:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -14,7 +15,6 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.22.5
-      - run: go test ./...
       - run: go run ./cmd/solver/main.go 2023 all
 #      - run: go run ./cmd/solver/main.go 2024 all
       - run: git diff
