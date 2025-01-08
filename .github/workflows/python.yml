@@ -5,7 +5,7 @@ on:
     paths:
       - '**.py'
       - 'requirements.txt'
-      - 'python.yml'
+      - '**/python.yml'
 
 jobs:
 
