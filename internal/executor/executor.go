@@ -51,9 +51,12 @@ func (e *Executor) solveTask(taskName string, t Task) error {
 		return err
 	} else {
 		for i, solver := range t.solvers {
+			if solver == nil {
+				continue
+			}
 			resultPath := path.Join(e.path, taskName, fmt.Sprintf("output.v%d", i+1))
 
-			started := time.Now()
+			startedAt := time.Now()
 
 			var resultStr string
 			switch solver.(type) {
@@ -68,7 +71,8 @@ func (e *Executor) solveTask(taskName string, t Task) error {
 			default:
 				panic(fmt.Sprintf("Unknown solver type: %T", solver))
 			}
-			ms := int(time.Since(started).Milliseconds())
+
+			ms := int(time.Since(startedAt).Milliseconds())
 			fmt.Printf("%s: %v -> %v, %d.%03ds\n", taskName, inputPath, resultPath, ms/1000, ms%1000)
 
 			if err = os.WriteFile(resultPath, []byte(resultStr), 0644); err != nil {

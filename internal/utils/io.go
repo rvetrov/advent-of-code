@@ -28,6 +28,7 @@ func NonEmptyLines(input string) []string {
 func SplitNumbers(line, sep string) []int {
 	var res []int
 	for _, numStr := range strings.Split(line, sep) {
+		numStr = strings.TrimSpace(numStr)
 		if num, err := strconv.Atoi(numStr); err == nil {
 			res = append(res, num)
 		}
