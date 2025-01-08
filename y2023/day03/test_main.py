@@ -1,4 +1,4 @@
-import main
+from y2023.day03 import main
 
 TEST_CASE_1 = """467..114..
 ...*......
@@ -14,10 +14,10 @@ TEST_CASE_1 = """467..114..
 
 
 def test_solve_v1():
-    res = main.solve_v1(TEST_CASE_1.split())
+    res = main.solve_v1(TEST_CASE_1)
     assert res == 4361
 
 
 def test_solve_v2():
-    res = main.solve_v2(TEST_CASE_1.split())
+    res = main.solve_v2(TEST_CASE_1)
     assert res == 467835
