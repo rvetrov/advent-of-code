@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '**.go'
+      - '**/go.yml'
 
 jobs:
   test-go-advent-of-code:
