@@ -19,5 +19,5 @@ jobs:
           python-version: '3.13'
           cache: 'pip' # caching pip dependencies
       - run: pip install -r requirements.txt
-      - run: .venv/bin/pytest .
+      - run: pytest .
       - run: git diff
