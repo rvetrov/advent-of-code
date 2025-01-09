@@ -8,7 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"adventofcode.com/internal/executor"
+	"adventofcode.com/internal/solver"
 )
 
 const allTasksArg = "all"
@@ -20,8 +20,8 @@ func main() {
 		Version: "1",
 	}
 
-	for _, yearExecutor := range []*executor.Executor{executor.Y2023, executor.Y2024} {
-		yearExecutor := yearExecutor
+	for _, yearSolver := range []*solver.YearSolver{solver.Y2023, solver.Y2024} {
+		yearExecutor := yearSolver
 		tasks := append([]string{allTasksArg}, yearExecutor.KnownTasks()...)
 		var yearCmd = cobra.Command{
 			Use:       fmt.Sprintf("%s {%s}...", yearExecutor.Name, strings.Join(tasks, ", ")),

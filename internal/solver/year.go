@@ -1,4 +1,4 @@
-package executor
+package solver
 
 import (
 	"errors"
@@ -15,25 +15,25 @@ import (
 
 var errNotFound = fmt.Errorf("task not found")
 
-type Executor struct {
-	Name    string
-	path    string
-	solvers map[string]Task
+type YearSolver struct {
+	Name         string
+	tasksDirName string
+	solvers      map[string]DaySolver
 }
 
-func (e *Executor) KnownTasks() []string {
-	tasks := maps.Keys(e.solvers)
+func (slv *YearSolver) KnownTasks() []string {
+	tasks := maps.Keys(slv.solvers)
 	sort.Strings(tasks)
 	return tasks
 }
 
-func (e *Executor) Solve(taskNames []string) error {
+func (slv *YearSolver) Solve(taskNames []string) error {
 	var errs []error
 
 	for _, taskName := range taskNames {
-		if task, found := e.solvers[taskName]; !found {
+		if task, found := slv.solvers[taskName]; !found {
 			errs = append(errs, errNotFound)
-		} else if err := e.solveTask(taskName, task); err != nil {
+		} else if err := slv.solveTask(taskName, task); err != nil {
 			errs = append(errs, err)
 		}
 	}
@@ -41,8 +41,8 @@ func (e *Executor) Solve(taskNames []string) error {
 	return errors.Join(errs...)
 }
 
-func (e *Executor) solveTask(taskName string, t Task) error {
-	inputPath := path.Join(e.path, taskName, "input.big")
+func (slv *YearSolver) solveTask(taskName string, t DaySolver) error {
+	inputPath := path.Join(slv.tasksDirName, taskName, "input.big")
 	if _, err := os.Stat(inputPath); err != nil {
 		return err
 	}
@@ -54,7 +54,7 @@ func (e *Executor) solveTask(taskName string, t Task) error {
 			if solver == nil {
 				continue
 			}
-			resultPath := path.Join(e.path, taskName, fmt.Sprintf("output.v%d", i+1))
+			resultPath := path.Join(slv.tasksDirName, taskName, fmt.Sprintf("output.v%d", i+1))
 
 			startedAt := time.Now()
 

@@ -1,4 +1,4 @@
-package executor
+package solver
 
 import (
 	"adventofcode.com/y2023/day01"
@@ -26,10 +26,10 @@ import (
 	"adventofcode.com/y2023/day24"
 )
 
-var Y2023 = &Executor{
-	Name: "2023",
-	path: "y2023",
-	solvers: map[string]Task{
+var Y2023 = &YearSolver{
+	Name:         "2023",
+	tasksDirName: "y2023",
+	solvers: map[string]DaySolver{
 		"day01": {[]taskSolver{day01.SolveV1, day01.SolveV2}},
 		"day02": {[]taskSolver{day02.SolveV1, day02.SolveV2}},
 		"day04": {[]taskSolver{day04.SolveV1, day04.SolveV2}},

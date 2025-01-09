@@ -1,7 +1,7 @@
-package executor
+package solver
 
 type taskSolver any
 
-type Task struct {
+type DaySolver struct {
 	solvers []taskSolver
 }
