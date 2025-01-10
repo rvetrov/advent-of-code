@@ -1,7 +1,6 @@
 package day25
 
 import (
-	"fmt"
 	"strings"
 
 	"adventofcode.com/internal/utils"
@@ -130,7 +129,6 @@ func SolveV1(input string) int {
 			}
 		}
 		if flow == restFlow-1 {
-			fmt.Println("Found:", edge)
 			restFlow--
 		} else {
 			graph.AddEdge(edge.From, edge.To)
@@ -138,7 +136,6 @@ func SolveV1(input string) int {
 	}
 
 	sizes := findComponentSizes(graph)
-	fmt.Println(sizes)
 	if len(sizes) == 2 {
 		return sizes[0] * sizes[1]
 	}
