@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=65.5.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "advent-of-code"
+version = "0.1.0"
+description = "Advent of Code puzzles with Python and Go"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "numpy >=2.2,<3.0",
+    "scipy >=1.15,<2.0",
+]
+optional-dependencies = { dev = ["pytest >=8.3,<9.0"] }
+
+[project.urls]
+Homepage = "https://adventofcode.com/"
+
+[tool.setuptools.packages.find]
+include = ["cmd*", "internal.py*", "y2023*", "y2024*"]
+namespaces = true
+
+[tool.poetry]
+package-mode = false
