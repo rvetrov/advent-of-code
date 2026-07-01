@@ -22,7 +22,7 @@ jobs:
       - name: Install Poetry
         run: python3 -m pip install --upgrade pip poetry
       - name: Install dependencies
-        run: poetry install
+        run: poetry install --with dev
       - name: Run tests
         run: poetry run pytest .
         env:
