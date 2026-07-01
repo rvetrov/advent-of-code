@@ -73,8 +73,9 @@ def solve_v2(data: str) -> int:
             aa.extend(a)
             bb.extend(b)
 
-        a = np.array(aa, dtype=np.longdouble)
-        b = np.array(bb, dtype=np.longdouble)
+        # use float64 to avoid SciPy deprecation for generic longdouble dtypes
+        a = np.array(aa, dtype=np.float64)
+        b = np.array(bb, dtype=np.float64)
 
         x = scipy.linalg.solve(a, b)
         res = int(np.round(x[0] + x[1] + x[2]))
