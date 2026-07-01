@@ -73,7 +73,6 @@ def solve_v2(data: str) -> int:
             aa.extend(a)
             bb.extend(b)
 
-        # use float64 to avoid SciPy deprecation for generic longdouble dtypes
         a = np.array(aa, dtype=np.float64)
         b = np.array(bb, dtype=np.float64)
 
