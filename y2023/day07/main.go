@@ -102,7 +102,7 @@ func charToStrength(ch rune, withJockers bool) int {
 func NewHand(str string, withJockers bool) *Hand {
 	hand := Hand{}
 	if n, err := fmt.Sscanf(str, "%s %d", &hand.raw, &hand.Bid); err != nil || n != 2 {
-		log.Fatalf("Failed to parse hand %q. N: %q, Error: %q", str, n, err)
+		log.Fatalf("Failed to parse hand %q. N: %d, Error: %v", str, n, err)
 	}
 	for _, ch := range hand.raw {
 		strength := charToStrength(ch, withJockers)
