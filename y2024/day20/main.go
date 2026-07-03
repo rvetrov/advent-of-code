@@ -20,7 +20,7 @@ func distsOnRoute(gr grid.Grid) map[grid.Position]int {
 
 	for len(q) > 0 {
 		pos := q[0]
-		dist, _ := dists[pos]
+		dist := dists[pos]
 		q = q[1:]
 
 		for _, dir := range grid.FourSides {

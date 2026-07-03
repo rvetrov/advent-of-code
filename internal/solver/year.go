@@ -59,15 +59,13 @@ func (slv *YearSolver) solveTask(taskName string, t DaySolver) error {
 			startedAt := time.Now()
 
 			var resultStr string
-			switch solver.(type) {
+			switch solver := solver.(type) {
 			case func(string) int:
-				result := solver.(func(string) int)(input)
-				resultStr = fmt.Sprint(result)
+				resultStr = fmt.Sprint(solver(input))
 			case func(string) int64:
-				result := solver.(func(string) int64)(input)
-				resultStr = fmt.Sprint(result)
+				resultStr = fmt.Sprint(solver(input))
 			case func(string) string:
-				resultStr = solver.(func(string) string)(input)
+				resultStr = solver(input)
 			default:
 				panic(fmt.Sprintf("Unknown solver type: %T", solver))
 			}

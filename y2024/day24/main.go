@@ -3,12 +3,12 @@ package day24
 import (
 	"fmt"
 	"math/bits"
+	"math/rand/v2"
 	"slices"
 	"strconv"
 	"strings"
 
 	"adventofcode.com/internal/utils"
-	"golang.org/x/exp/rand"
 )
 
 type WireInd int
@@ -234,8 +234,8 @@ func (d *Device) explain(gate Gate) string {
 func detectCorruptedBits(d *Device, iterations int, correctProducer func(int64, int64) int64) int64 {
 	var corruptedBits int64
 	for range iterations {
-		x := rand.Int63() & ((1 << d.inputBitSize) - 1)
-		y := rand.Int63() & ((1 << d.inputBitSize) - 1)
+		x := rand.Int64() & ((1 << d.inputBitSize) - 1)
+		y := rand.Int64() & ((1 << d.inputBitSize) - 1)
 		expected := correctProducer(x, y)
 
 		state := d.InputNumsToState(x, y)

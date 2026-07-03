@@ -17,6 +17,10 @@ jobs:
         with:
           go-version-file: go.mod
       - run: go test ./...
+      - name: Staticcheck
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@2026.1
+          staticcheck ./...
       - run: go run ./cmd/solver/main.go 2023 all
 #      - run: go run ./cmd/solver/main.go 2024 all
       - run: git diff
