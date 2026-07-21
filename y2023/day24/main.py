@@ -43,7 +43,9 @@ def __make_equation(p1x, p1y, v1x, v1y, p2x, p2y, v2x, v2y) -> (list[int], int):
     return a, b
 
 
-def __make_equations(p1: Point, v1: Vector, p2: Point, v2: Vector) -> (list[list[int]], list[int]):
+def __make_equations(
+    p1: Point, v1: Vector, p2: Point, v2: Vector
+) -> tuple[list[list[int]], list[int]]:
     a, b_xy = __make_equation(p1.x, p1.y, v1.x, v1.y, p2.x, p2.y, v2.x, v2.y)
     a_xy = [0] * 6
     a_xy[0], a_xy[1], a_xy[3], a_xy[4] = a
@@ -69,7 +71,9 @@ def solve_v2(data: str) -> int:
         ind = random.sample(range(len(points)), k=4)
         aa, bb = [], []
         for i in range(1, 4):
-            a, b = __make_equations(points[ind[0]], vecs[ind[0]], points[ind[i]], vecs[ind[i]])
+            a, b = __make_equations(
+                points[ind[0]], vecs[ind[0]], points[ind[i]], vecs[ind[i]]
+            )
             aa.extend(a)
             bb.extend(b)
 

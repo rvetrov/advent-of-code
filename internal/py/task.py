@@ -1,7 +1,6 @@
 import time
 import typing
 
-
 INPUT_FILE_NAME = "input.big"
 OUTPUT_FILE_BASE_NAME = "output"
 Solver = typing.Callable[[str], typing.Any]

@@ -3,11 +3,14 @@
 import importlib
 import os
 import sys
-__project_root = os.path.realpath(os.path.join(os.path.dirname(__file__), os.path.pardir))
+
+__project_root = os.path.realpath(
+    os.path.join(os.path.dirname(__file__), os.path.pardir)
+)
 sys.path = [__project_root] + sys.path  # noqa
 
 
-def main(args: [str]):
+def main(args: list[str]):
     task_paths = args[1:]
     task_modules = []
 

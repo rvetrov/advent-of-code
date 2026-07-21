@@ -1,7 +1,9 @@
 from internal.py import task, task_io
 
 
-def nearby_symbols(lines: list[str], ii: int, jj: int) -> dict[str, set[tuple[int, int]]]:
+def nearby_symbols(
+    lines: list[str], ii: int, jj: int
+) -> dict[str, set[tuple[int, int]]]:
     symbols = {}
     for i in range(-1, 2):
         for j in range(-1, 2):
@@ -11,7 +13,7 @@ def nearby_symbols(lines: list[str], ii: int, jj: int) -> dict[str, set[tuple[in
             nj = jj + j
             if 0 <= ni < len(lines) and 0 <= nj < len(lines[ni]):
                 ch = lines[ni][nj]
-                if ch != '.' and not ch.isdigit():
+                if ch != "." and not ch.isdigit():
                     symbols.setdefault(ch, set()).add((ni, nj))
     return symbols
 
